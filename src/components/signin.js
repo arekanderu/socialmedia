@@ -1,6 +1,4 @@
 import React from 'react';
-import SupervisedUserCircleIcon from '@material-ui/icons/SupervisedUserCircle';
-import { TextField, Button } from '@material-ui/core';
 
 const Login = (props) => {
   const { email,
@@ -8,13 +6,11 @@ const Login = (props) => {
           password,
           setPassword,
           handleLogin,
-          error,
           errorMessage } = props;
   return(
     <div className="login">
       <h1 className="logo">
-          <SupervisedUserCircleIcon />
-          Social Network
+         Sign in
       </h1>
 
       <div classNames="forms">
@@ -25,7 +21,6 @@ const Login = (props) => {
           fullWidth
           autoFocus
           required
-          error={error}
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
