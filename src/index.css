@@ -28,3 +28,10 @@ code {
 .error-message{
   color: red;
 }
+
+.close-icon{
+  position: absolute;
+  right: 1%;
+  top: 1%;
+  color: gray;
+}

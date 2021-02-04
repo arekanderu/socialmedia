@@ -1,12 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Dialog, DialogTitle, DialogContent, DialogActions, TextField, Button } from '@material-ui/core';
+import CloseIcon from '@material-ui/icons/Close';
 
-const signup = (props) => {
-  const {  } = props;
+const Signup = (props) => {
+  const { clicked,
+          setClicked,
+          handleSignUp,
+          error,
+           emailErrorMessage,
+           passwordErrorMessage } = props;
+
   return(
 
     <div className="signup">
-      <Dialog open={true} aria-labelledby="form-dialog-title">
+      <Dialog open={clicked} aria-labelledby="form-dialog-title">
+        <div className="close-icon">
+          <CloseIcon onClick={() => setClicked(!clicked)} />
+        </div>
         <DialogTitle>Sign up</DialogTitle>
         <DialogContent dividers>
           <TextField
@@ -21,8 +31,8 @@ const signup = (props) => {
             id="last-name-input"
             label="Last Name"
             variant="outlined"
-            autoFocus
             required
+            style={{ marginLeft: '10px'}}
           />
 
           <br /><br />
@@ -31,9 +41,9 @@ const signup = (props) => {
             id="email-signup-input"
             label="Email"
             variant="outlined"
-            autoFocus
             required
             fullWidth
+            error={error}
           />
 
           <br /><br />
@@ -42,14 +52,15 @@ const signup = (props) => {
             id="password-signup-input"
             label="Password"
             variant="outlined"
-            autoFocus
             required
             fullWidth
+            error={error}
           />
+          <p className="error-message">{passwordErrorMessage, emailErrorMessage}</p>
         </DialogContent>
 
         <DialogActions >
-          <Button variant="contained" color="secondary">
+          <Button variant="contained" color="secondary" fullWidth onClick={handleSignUp}>
             Sign up
           </Button>
         </DialogActions>
@@ -58,4 +69,4 @@ const signup = (props) => {
   )
 }
 
-export default signup;
+export default Signup;

@@ -3,20 +3,32 @@ import Login from './components/login';
 import firebase from './config/database';
 
 const App = () => {
-  const [user, setUser] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState(false)
-  const [emailErrorMessage, setEmailErrorMessage] = useState('');
-  const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
+  const [ email, setEmail ] = useState('');
+  const [ password, setPassword ] = useState('');
+  const [ error, setError ] = useState(false)
+  //need to set error for signup
+  const [ emailErrorMessage, setEmailErrorMessage ] = useState('');
+  const [ passwordErrorMessage, setPasswordErrorMessage ] = useState('');
 
-  const handleSignIn = () => {
+  const handleSignUp = () => {
    firebase.auth().createUserWithEmailAndPassword(email, password)
     .then((userCredential) => {
 
     })
     .catch((error) => {
-      alert(error);
+      switch(error.code) {
+        case "auth/invalid-email":
+        case "auth/user-disabled":
+        case "auth/user-not-found":
+          setEmailErrorMessage(error.message);
+          setError(true);
+          alert('yow')
+        break;
+
+        case "auth/wrong-password":
+          setPasswordErrorMessage(error.messagee);
+          setError(true)
+      }
     })
   }
 
@@ -60,6 +72,8 @@ const App = () => {
         handleLogin={handleLogin}
         error={error}
         emailErrorMessage={emailErrorMessage}
+        passwordErrorMessage={passwordErrorMessage}
+        handleSignUp={handleSignUp}
       />
     </div>
   )
