@@ -15,7 +15,6 @@ const App = () => {
       .then((userCredential) => {
     })
     .catch((error) => {
-      console.log(error)
       handleError(error);
     })
   }
@@ -24,10 +23,9 @@ const App = () => {
     clearErrors();
     firebase.auth().signInWithEmailAndPassword(email, password)
       .then((userCredential) => {
-        //signed in
       })
       .catch((error) => {
-        handleError(error, 'login');
+        handleError(error);
       })
   }
 
@@ -45,6 +43,7 @@ const App = () => {
       case "auth/invalid-email":
       case "auth/user-disabled":
       case "auth/user-not-found":
+      case "auth/email-already-in-use":
         setEmailErrorMessage(error.message);
         break;
 

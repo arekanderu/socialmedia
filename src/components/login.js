@@ -2,6 +2,10 @@ import React, { useState, useEffect } from 'react';
 import SupervisedUserCircleIcon from '@material-ui/icons/SupervisedUserCircle';
 import { TextField, Button } from '@material-ui/core';
 import SignUp from './signup';
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import IconButton from '@material-ui/core/IconButton';
 
 const Login = (props) => {
   const { email,
@@ -15,6 +19,7 @@ const Login = (props) => {
   const [ errorEmail, setErrorEmail ] = useState(false)
   const [ errorPassword, setErrorPassword ] = useState(false);
   const [ clicked, setClicked ] = useState(false);
+  const [ showPassword, setShowPassword ] = useState(false);
 
   const flagError = () => {
     if(!clicked) {
@@ -59,6 +64,7 @@ const Login = (props) => {
         <br /><br />
         <TextField
           id="password-input"
+          type={showPassword ? "text" : "password"}
           label="Password"
           variant="outlined"
           fullWidth
@@ -66,6 +72,15 @@ const Login = (props) => {
           value={password}
           error={errorPassword}
           onChange={(e) => setPassword(e.target.value)}
+          InputProps={{
+            endAdornment: (
+            <InputAdornment position="end">
+              <IconButton onClick={() => setShowPassword(!showPassword)}>
+                {showPassword ? <Visibility /> : <VisibilityOff />}
+              </IconButton>
+            </InputAdornment>
+            )
+          }}
         />
         <br />
         {!clicked ?
@@ -87,6 +102,10 @@ const Login = (props) => {
         handleSignUp={handleSignUp}
         emailErrorMessage={emailErrorMessage}
         passwordErrorMessage={passwordErrorMessage}
+        email={email}
+        setEmail={setEmail}
+        password={password}
+        setPassword={setPassword}
       />
 
     </div>

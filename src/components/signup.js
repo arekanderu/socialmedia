@@ -1,13 +1,44 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Dialog, DialogTitle, DialogContent, DialogActions, TextField, Button } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import IconButton from '@material-ui/core/IconButton';
+
 
 const Signup = (props) => {
   const { clicked,
           setClicked,
           handleSignUp,
+          email,
+          setEmail,
+          password,
+          setPassword,
           emailErrorMessage,
           passwordErrorMessage } = props;
+  const [ errorEmail, setErrorEmail ] = useState(false);
+  const [ errorPassword, setErrorPassword ] = useState(false);
+  const [ showPassword, setShowPassword ] = useState(false);
+
+  const flagError = () => {
+    if(emailErrorMessage !== '') {
+      setErrorEmail(true);
+    }
+
+    else if(passwordErrorMessage !== ''){
+      setErrorPassword(true);
+    }
+
+    else{
+      setErrorEmail(false);
+      setErrorPassword(false);
+    }
+    }
+
+  useEffect(() =>{
+    flagError();
+  })
 
   return(
     <div className="signup">
@@ -23,6 +54,7 @@ const Signup = (props) => {
             variant="outlined"
             autoFocus
             required
+
           />
 
           <TextField
@@ -31,6 +63,7 @@ const Signup = (props) => {
             variant="outlined"
             required
             style={{ marginLeft: '10px'}}
+
           />
 
           <br /><br />
@@ -41,16 +74,33 @@ const Signup = (props) => {
             variant="outlined"
             required
             fullWidth
+            error={errorEmail}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
 
           <br /><br />
 
           <TextField
             id="password-signup-input"
+            type={showPassword ? "text" : "password"}
             label="Password"
             variant="outlined"
             required
             fullWidth
+            error={errorPassword}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => setPassword(e.target.value)}
+            InputProps={{
+              endAdornment: (
+              <InputAdornment position="end">
+                <IconButton onClick={() => setShowPassword(!showPassword)}>
+                  {showPassword ? <Visibility /> : <VisibilityOff />}
+                </IconButton>
+              </InputAdornment>
+              )
+            }}
           />
 
           <p className="error-message">{passwordErrorMessage}</p>
