@@ -5,51 +5,29 @@ import firebase from './config/database';
 const App = () => {
   const [ email, setEmail ] = useState('');
   const [ password, setPassword ] = useState('');
-  const [ error, setError ] = useState(false)
-  //need to set error for signup
   const [ emailErrorMessage, setEmailErrorMessage ] = useState('');
   const [ passwordErrorMessage, setPasswordErrorMessage ] = useState('');
 
-  const handleSignUp = () => {
-   firebase.auth().createUserWithEmailAndPassword(email, password)
-    .then((userCredential) => {
 
+  const handleSignUp = () => {
+    clearErrors();
+    firebase.auth().createUserWithEmailAndPassword(email, password)
+      .then((userCredential) => {
     })
     .catch((error) => {
-      switch(error.code) {
-        case "auth/invalid-email":
-        case "auth/user-disabled":
-        case "auth/user-not-found":
-          setEmailErrorMessage(error.message);
-          setError(true);
-          alert('yow')
-        break;
-
-        case "auth/wrong-password":
-          setPasswordErrorMessage(error.messagee);
-          setError(true)
-      }
+      handleError(error);
     })
   }
 
   const handleLogin = () => {
+    clearErrors();
     firebase.auth().signInWithEmailAndPassword(email, password)
       .then((userCredential) => {
         //signed in
       })
       .catch((error) => {
-        switch(error.code) {
-          case "auth/invalid-email":
-          case "auth/user-disabled":
-          case "auth/user-not-found":
-            setEmailErrorMessage(error.message);
-            setError(true);
-          break;
-
-          case "auth/wrong-password":
-            setPasswordErrorMessage(error.messagee);
-            setError(true)
-        }
+        console.log(error);
+        handleError(error);
       })
   }
 
@@ -59,7 +37,27 @@ const App = () => {
     }).catch((error) => {
 
     });
+  }
 
+  const handleError = (error) => {
+    switch(error.code) {
+      case "auth/invalid-email":
+      case "auth/user-disabled":
+      case "auth/user-not-found":
+        setEmailErrorMessage(error.message);
+        break;
+
+      case "auth/wrong-password":
+        setPasswordErrorMessage(error.message);
+        break;
+      default:
+        break;
+    }
+  }
+
+  const clearErrors = () => {
+    setEmailErrorMessage('');
+    setPasswordErrorMessage('');
   }
 
   return(
@@ -70,7 +68,6 @@ const App = () => {
         password={password}
         setPassword={setPassword}
         handleLogin={handleLogin}
-        error={error}
         emailErrorMessage={emailErrorMessage}
         passwordErrorMessage={passwordErrorMessage}
         handleSignUp={handleSignUp}

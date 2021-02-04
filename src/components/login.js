@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import SupervisedUserCircleIcon from '@material-ui/icons/SupervisedUserCircle';
 import { TextField, Button } from '@material-ui/core';
 import SignUp from './signup';
@@ -9,11 +9,32 @@ const Login = (props) => {
           password,
           setPassword,
           handleLogin,
-          error,
           emailErrorMessage,
           passwordErrorMessage,
           handleSignUp } = props;
+  const [ errorEmail, setErrorEmail ] = useState(false)
+  const [ errorPassword, setErrorPassword ] = useState(false);
   const [ clicked, setClicked ] = useState(false);
+
+  const flagError = () => {
+    if(emailErrorMessage !== '') {
+      setErrorEmail(true);
+    }
+
+    else if(passwordErrorMessage !== ''){
+      setErrorPassword(true);
+    }
+
+    else{
+      setErrorEmail(false);
+      setErrorPassword(false);
+    }
+  }
+
+  useEffect(() =>{
+    flagError();
+  })
+
   return(
     <div className="login">
       <h1 className="logo">
@@ -29,8 +50,8 @@ const Login = (props) => {
           fullWidth
           autoFocus
           required
-          error={error}
           value={email}
+          error={errorEmail}
           onChange={(e) => setEmail(e.target.value)}
         />
         <br /><br />
@@ -41,10 +62,12 @@ const Login = (props) => {
           fullWidth
           required
           value={password}
+          error={errorPassword}
           onChange={(e) => setPassword(e.target.value)}
         />
         <br />
-        <p className="error-message">{emailErrorMessage, passwordErrorMessage}</p>
+        <p className="error-message">{emailErrorMessage}</p>
+        <p className="error-message">{passwordErrorMessage}</p>
         <Button variant="contained" color="primary" fullWidth onClick={handleLogin}>
           Login
         </Button>
@@ -59,7 +82,7 @@ const Login = (props) => {
         clicked={clicked}
         setClicked={setClicked}
         handleSignUp={handleSignUp}
-        error={error}
+        // error={error}
         emailErrorMessage={emailErrorMessage}
         passwordErrorMessage={passwordErrorMessage}
       />
