@@ -7,7 +7,8 @@ const App = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(false)
-  const [errorMessage, setErrorMessage] = useState('');
+  const [emailErrorMessage, setEmailErrorMessage] = useState('');
+  const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
 
   const handleSignIn = () => {
    firebase.auth().createUserWithEmailAndPassword(email, password)
@@ -25,8 +26,18 @@ const App = () => {
         //signed in
       })
       .catch((error) => {
-        setErrorMessage(error.message);
-        setError(true);
+        switch(error.code) {
+          case "auth/invalid-email":
+          case "auth/user-disabled":
+          case "auth/user-not-found":
+            setEmailErrorMessage(error.message);
+            setError(true);
+          break;
+
+          case "auth/wrong-password":
+            setPasswordErrorMessage(error.messagee);
+            setError(true)
+        }
       })
   }
 
@@ -48,7 +59,7 @@ const App = () => {
         setPassword={setPassword}
         handleLogin={handleLogin}
         error={error}
-        errorMessage={errorMessage}
+        emailErrorMessage={emailErrorMessage}
       />
     </div>
   )

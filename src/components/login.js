@@ -1,6 +1,7 @@
 import React from 'react';
 import SupervisedUserCircleIcon from '@material-ui/icons/SupervisedUserCircle';
 import { TextField, Button } from '@material-ui/core';
+import SignUp from './signup';
 
 const Login = (props) => {
   const { email,
@@ -9,7 +10,7 @@ const Login = (props) => {
           setPassword,
           handleLogin,
           error,
-          errorMessage } = props;
+          emailErrorMessage } = props;
   return(
     <div className="login">
       <h1 className="logo">
@@ -40,7 +41,7 @@ const Login = (props) => {
           onChange={(e) => setPassword(e.target.value)}
         />
         <br />
-        <p className="error-message">{errorMessage}</p>
+        <p className="error-message">{emailErrorMessage}</p>
         <Button variant="contained" color="primary" fullWidth onClick={handleLogin}>
           Login
         </Button>
@@ -50,6 +51,8 @@ const Login = (props) => {
           Sign up
         </Button>
       </div>
+
+      <SignUp />
 
     </div>
   )
