@@ -15,6 +15,7 @@ const App = () => {
       .then((userCredential) => {
     })
     .catch((error) => {
+      console.log(error)
       handleError(error);
     })
   }
@@ -26,8 +27,7 @@ const App = () => {
         //signed in
       })
       .catch((error) => {
-        console.log(error);
-        handleError(error);
+        handleError(error, 'login');
       })
   }
 
@@ -40,6 +40,7 @@ const App = () => {
   }
 
   const handleError = (error) => {
+    console.log(error);
     switch(error.code) {
       case "auth/invalid-email":
       case "auth/user-disabled":
@@ -48,6 +49,7 @@ const App = () => {
         break;
 
       case "auth/wrong-password":
+      case "auth/weak-password":
         setPasswordErrorMessage(error.message);
         break;
       default:

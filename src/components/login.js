@@ -17,17 +17,19 @@ const Login = (props) => {
   const [ clicked, setClicked ] = useState(false);
 
   const flagError = () => {
-    if(emailErrorMessage !== '') {
-      setErrorEmail(true);
-    }
+    if(!clicked) {
+      if(emailErrorMessage !== '') {
+        setErrorEmail(true);
+      }
 
-    else if(passwordErrorMessage !== ''){
-      setErrorPassword(true);
-    }
+      else if(passwordErrorMessage !== ''){
+        setErrorPassword(true);
+      }
 
-    else{
-      setErrorEmail(false);
-      setErrorPassword(false);
+      else{
+        setErrorEmail(false);
+        setErrorPassword(false);
+      }
     }
   }
 
@@ -66,8 +68,9 @@ const Login = (props) => {
           onChange={(e) => setPassword(e.target.value)}
         />
         <br />
-        <p className="error-message">{emailErrorMessage}</p>
-        <p className="error-message">{passwordErrorMessage}</p>
+        {!clicked ?
+        <p className="error-message">{emailErrorMessage} {passwordErrorMessage}</p> : '' }
+
         <Button variant="contained" color="primary" fullWidth onClick={handleLogin}>
           Login
         </Button>
@@ -82,7 +85,6 @@ const Login = (props) => {
         clicked={clicked}
         setClicked={setClicked}
         handleSignUp={handleSignUp}
-        // error={error}
         emailErrorMessage={emailErrorMessage}
         passwordErrorMessage={passwordErrorMessage}
       />

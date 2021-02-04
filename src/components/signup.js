@@ -6,12 +6,10 @@ const Signup = (props) => {
   const { clicked,
           setClicked,
           handleSignUp,
-          error,
-           emailErrorMessage,
-           passwordErrorMessage } = props;
+          emailErrorMessage,
+          passwordErrorMessage } = props;
 
   return(
-
     <div className="signup">
       <Dialog open={clicked} aria-labelledby="form-dialog-title">
         <div className="close-icon">
@@ -43,7 +41,6 @@ const Signup = (props) => {
             variant="outlined"
             required
             fullWidth
-            error={error}
           />
 
           <br /><br />
@@ -54,9 +51,10 @@ const Signup = (props) => {
             variant="outlined"
             required
             fullWidth
-            error={error}
           />
-          <p className="error-message">{passwordErrorMessage, emailErrorMessage}</p>
+
+          <p className="error-message">{passwordErrorMessage}</p>
+          <p className="error-message">{emailErrorMessage}</p>
         </DialogContent>
 
         <DialogActions >
