@@ -1,18 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Login from './components/login';
 import firebase from './config/database';
+import Homepage from './components/homepage';
+
+/**
+ * 1. Need to associate first name and last name to account.
+ * 2. Need to remember its logged in.
+ */
 
 const App = () => {
   const [ email, setEmail ] = useState('');
   const [ password, setPassword ] = useState('');
   const [ emailErrorMessage, setEmailErrorMessage ] = useState('');
   const [ passwordErrorMessage, setPasswordErrorMessage ] = useState('');
-
+  const [ user, setUser ] = useState('');
 
   const handleSignUp = () => {
     clearErrors();
     firebase.auth().createUserWithEmailAndPassword(email, password)
       .then((userCredential) => {
+        console.log("New account successfully created.");
     })
     .catch((error) => {
       handleError(error);
@@ -23,6 +30,7 @@ const App = () => {
     clearErrors();
     firebase.auth().signInWithEmailAndPassword(email, password)
       .then((userCredential) => {
+        console.log("User successfully logged in.")
       })
       .catch((error) => {
         handleError(error);
@@ -33,12 +41,10 @@ const App = () => {
     firebase.auth().signOut().then(() => {
       //sign-out
     }).catch((error) => {
-
     });
   }
 
   const handleError = (error) => {
-    console.log(error);
     switch(error.code) {
       case "auth/invalid-email":
       case "auth/user-disabled":
@@ -61,18 +67,38 @@ const App = () => {
     setPasswordErrorMessage('');
   }
 
+  const authListener = () => {
+    firebase.auth().onAuthStateChanged((userCredential) => {
+      if(userCredential){
+        setUser(userCredential);
+      }
+
+      else{
+        setUser("");
+      }
+    })
+  }
+
+  useEffect(() =>{
+    authListener();
+  }, [])
+
+
   return(
     <div>
-      <Login
-        email={email}
-        setEmail={setEmail}
-        password={password}
-        setPassword={setPassword}
-        handleLogin={handleLogin}
-        emailErrorMessage={emailErrorMessage}
-        passwordErrorMessage={passwordErrorMessage}
-        handleSignUp={handleSignUp}
-      />
+      {user ?
+        <Homepage /> :
+        <Login
+          email={email}
+          setEmail={setEmail}
+          password={password}
+          setPassword={setPassword}
+          handleLogin={handleLogin}
+          emailErrorMessage={emailErrorMessage}
+          passwordErrorMessage={passwordErrorMessage}
+          handleSignUp={handleSignUp}
+        />
+      }
     </div>
   )
 }
