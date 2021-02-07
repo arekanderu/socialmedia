@@ -5,9 +5,18 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
+import SupervisedUserCircleIcon from '@material-ui/icons/SupervisedUserCircle';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles(() => ({
+  title: {
+    flexGrow: 1,
+  },
+}));
 
 const Homepage = (props) => {
   const {  } = props;
+  const classes = useStyles();
   return(
     <div className="homepage">
       <AppBar position="static">
@@ -15,10 +24,11 @@ const Homepage = (props) => {
           <IconButton edge="start" color="inherit" aria-label="menu">
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" >
+          <Typography variant="h6" className={classes.title}>
+            <SupervisedUserCircleIcon />
             Social Network
           </Typography>
-          <Button color="inherit">Logout</Button>
+          <Button color="inherit" >Logout</Button>
         </Toolbar>
       </AppBar>
     </div>
