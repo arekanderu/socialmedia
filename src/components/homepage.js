@@ -15,7 +15,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 const Homepage = (props) => {
-  const {  } = props;
+  const { handleLogout } = props;
   const classes = useStyles();
   return(
     <div className="homepage">
@@ -28,7 +28,7 @@ const Homepage = (props) => {
             <SupervisedUserCircleIcon />
             Social Network
           </Typography>
-          <Button color="inherit" >Logout</Button>
+          <Button color="inherit" onClick={handleLogout} >Logout</Button>
         </Toolbar>
       </AppBar>
     </div>

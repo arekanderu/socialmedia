@@ -5,7 +5,7 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import IconButton from '@material-ui/core/IconButton';
-
+import Connect from '../config/database';
 
 const Signup = (props) => {
   const { clicked,
@@ -17,9 +17,37 @@ const Signup = (props) => {
           setPassword,
           emailErrorMessage,
           passwordErrorMessage } = props;
+  const [ firstName, setFirstName ] = useState('');
+  const [ errorFirstName, setErrorFirstName ] = useState(false);
+  const [ lastName, setLastName ] = useState('');
+  const [ errorLastName, setErrorLastName ] = useState(false);
   const [ errorEmail, setErrorEmail ] = useState(false);
   const [ errorPassword, setErrorPassword ] = useState(false);
   const [ showPassword, setShowPassword ] = useState(false);
+
+  const validate = () => {
+
+    if(firstName === '' && lastName === ''){
+      setErrorFirstName(true);
+      setErrorLastName(true);
+    }
+
+    else if(firstName === '' && lastName !== '') {
+      setErrorFirstName(true);
+      setErrorLastName(false);
+    }
+
+    else if(lastName === '' && firstName !== ''){
+      setErrorLastName(true);
+      setErrorFirstName(false);
+    }
+
+    else{
+      setErrorFirstName(false);
+      setErrorLastName(false);
+      handleSignUp();
+    }
+  }
 
   const flagError = () => {
     if(emailErrorMessage !== '') {
@@ -34,11 +62,13 @@ const Signup = (props) => {
       setErrorEmail(false);
       setErrorPassword(false);
     }
-    }
+  }
 
   useEffect(() =>{
     flagError();
   })
+
+
 
   return(
     <div className="signup">
@@ -54,7 +84,9 @@ const Signup = (props) => {
             variant="outlined"
             autoFocus
             required
-
+            value={firstName}
+            error={errorFirstName}
+            onChange={(e) => setFirstName(e.target.value)}
           />
 
           <TextField
@@ -63,6 +95,9 @@ const Signup = (props) => {
             variant="outlined"
             required
             style={{ marginLeft: '10px'}}
+            value={lastName}
+            error={errorLastName}
+            onChange={(e) => setLastName(e.target.value)}
 
           />
 
@@ -108,7 +143,7 @@ const Signup = (props) => {
         </DialogContent>
 
         <DialogActions >
-          <Button variant="contained" color="secondary" fullWidth onClick={handleSignUp}>
+          <Button variant="contained" color="secondary" fullWidth onClick={validate}>
             Sign up
           </Button>
         </DialogActions>

@@ -5,7 +5,6 @@ import Homepage from './components/homepage';
 
 /**
  * 1. Need to associate first name and last name to account.
- * 2. Need to remember its logged in.
  */
 
 const App = () => {
@@ -14,12 +13,14 @@ const App = () => {
   const [ emailErrorMessage, setEmailErrorMessage ] = useState('');
   const [ passwordErrorMessage, setPasswordErrorMessage ] = useState('');
   const [ user, setUser ] = useState('');
+  const [ userId, setUserId ] = useState('');
 
-  const handleSignUp = () => {
+  const handleSignUp = (firstName, lastName) => {
     clearErrors();
     firebase.auth().createUserWithEmailAndPassword(email, password)
       .then((userCredential) => {
         console.log("New account successfully created.");
+        console.log(userCredential.uid);
     })
     .catch((error) => {
       handleError(error);
@@ -30,7 +31,7 @@ const App = () => {
     clearErrors();
     firebase.auth().signInWithEmailAndPassword(email, password)
       .then((userCredential) => {
-        console.log("User successfully logged in.")
+        console.log("User successfully logged in.");
       })
       .catch((error) => {
         handleError(error);
@@ -39,8 +40,8 @@ const App = () => {
 
   const handleLogout = () => {
     firebase.auth().signOut().then(() => {
-      //sign-out
-    }).catch((error) => {
+    }).catch(() => {
+      console.log('There was an error.')
     });
   }
 
@@ -71,6 +72,7 @@ const App = () => {
     firebase.auth().onAuthStateChanged((userCredential) => {
       if(userCredential){
         setUser(userCredential);
+        setUserId(userCredential.uid);
       }
 
       else{
@@ -87,7 +89,7 @@ const App = () => {
   return(
     <div>
       {user ?
-        <Homepage /> :
+        <Homepage handleLogout={handleLogout}/> :
         <Login
           email={email}
           setEmail={setEmail}
@@ -97,6 +99,7 @@ const App = () => {
           emailErrorMessage={emailErrorMessage}
           passwordErrorMessage={passwordErrorMessage}
           handleSignUp={handleSignUp}
+          userId={userId}
         />
       }
     </div>
