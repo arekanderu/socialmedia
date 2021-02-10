@@ -49,7 +49,7 @@ const Login = (props) => {
           Social Network
       </h1>
 
-      <div classNames="forms">
+      <div>
         <TextField
           id="email-input"
           label="Email"

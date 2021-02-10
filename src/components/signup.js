@@ -5,7 +5,6 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import IconButton from '@material-ui/core/IconButton';
-import Connect from '../config/database';
 
 const Signup = (props) => {
   const { clicked,
@@ -123,7 +122,6 @@ const Signup = (props) => {
             fullWidth
             error={errorPassword}
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
             onChange={(e) => setPassword(e.target.value)}
             InputProps={{
               endAdornment: (

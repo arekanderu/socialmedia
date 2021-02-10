@@ -9,6 +9,7 @@ const App = () => {
   const [ emailErrorMessage, setEmailErrorMessage ] = useState('');
   const [ passwordErrorMessage, setPasswordErrorMessage ] = useState('');
   const [ user, setUser ] = useState('');
+  const [ userId, setUserId ] = useState('');
 
   const handleSignUp = (firstName, lastName) => {
     clearErrors();
@@ -71,6 +72,7 @@ const App = () => {
     firebase.auth().onAuthStateChanged((userCredential) => {
       if(userCredential){
         setUser(userCredential);
+        setUserId(userCredential.uid)
       }
 
       else{
@@ -89,6 +91,7 @@ const App = () => {
       {user ?
         <Homepage
           handleLogout={handleLogout}
+          userId={userId}
         /> :
         <Login
           email={email}
