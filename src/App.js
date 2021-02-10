@@ -3,24 +3,23 @@ import Login from './components/login';
 import firebase from './config/database';
 import Homepage from './components/homepage';
 
-/**
- * 1. Need to associate first name and last name to account.
- */
-
 const App = () => {
   const [ email, setEmail ] = useState('');
   const [ password, setPassword ] = useState('');
   const [ emailErrorMessage, setEmailErrorMessage ] = useState('');
   const [ passwordErrorMessage, setPasswordErrorMessage ] = useState('');
   const [ user, setUser ] = useState('');
-  const [ userId, setUserId ] = useState('');
 
   const handleSignUp = (firstName, lastName) => {
     clearErrors();
     firebase.auth().createUserWithEmailAndPassword(email, password)
       .then((userCredential) => {
-        console.log("New account successfully created.");
-        console.log(userCredential.uid);
+        return firebase.database().ref('users/' + userCredential.user.uid).set({
+          uid: userCredential.user.uid,
+          email: userCredential.user.email,
+          firstname: firstName,
+          lastname: lastName
+        })
     })
     .catch((error) => {
       handleError(error);
@@ -72,7 +71,6 @@ const App = () => {
     firebase.auth().onAuthStateChanged((userCredential) => {
       if(userCredential){
         setUser(userCredential);
-        setUserId(userCredential.uid);
       }
 
       else{
@@ -89,7 +87,9 @@ const App = () => {
   return(
     <div>
       {user ?
-        <Homepage handleLogout={handleLogout}/> :
+        <Homepage
+          handleLogout={handleLogout}
+        /> :
         <Login
           email={email}
           setEmail={setEmail}
@@ -99,7 +99,6 @@ const App = () => {
           emailErrorMessage={emailErrorMessage}
           passwordErrorMessage={passwordErrorMessage}
           handleSignUp={handleSignUp}
-          userId={userId}
         />
       }
     </div>

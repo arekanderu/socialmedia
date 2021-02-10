@@ -15,8 +15,7 @@ const Login = (props) => {
           handleLogin,
           emailErrorMessage,
           passwordErrorMessage,
-          handleSignUp,
-          userId } = props;
+          handleSignUp } = props;
   const [ errorEmail, setErrorEmail ] = useState(false)
   const [ errorPassword, setErrorPassword ] = useState(false);
   const [ clicked, setClicked ] = useState(false);
@@ -107,7 +106,6 @@ const Login = (props) => {
         setEmail={setEmail}
         password={password}
         setPassword={setPassword}
-        userId={userId}
       />
 
     </div>

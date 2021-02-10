@@ -45,7 +45,7 @@ const Signup = (props) => {
     else{
       setErrorFirstName(false);
       setErrorLastName(false);
-      handleSignUp();
+      handleSignUp(firstName, lastName);
     }
   }
 
@@ -67,8 +67,6 @@ const Signup = (props) => {
   useEffect(() =>{
     flagError();
   })
-
-
 
   return(
     <div className="signup">

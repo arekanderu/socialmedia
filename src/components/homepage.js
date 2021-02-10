@@ -7,6 +7,10 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import SupervisedUserCircleIcon from '@material-ui/icons/SupervisedUserCircle';
 import { makeStyles } from '@material-ui/core/styles';
+import firebase from './config/database';
+
+/*add first and last name.
+*/
 
 const useStyles = makeStyles(() => ({
   title: {
@@ -17,6 +21,7 @@ const useStyles = makeStyles(() => ({
 const Homepage = (props) => {
   const { handleLogout } = props;
   const classes = useStyles();
+  const firstName = firebase.database().ref('users')
   return(
     <div className="homepage">
       <AppBar position="static">
