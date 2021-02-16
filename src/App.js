@@ -9,14 +9,15 @@ const App = () => {
   const [ emailErrorMessage, setEmailErrorMessage ] = useState('');
   const [ passwordErrorMessage, setPasswordErrorMessage ] = useState('');
   const [ user, setUser ] = useState('');
-  const [ userId, setUserId ] = useState('');
+  const [ firstName, setFirstName] = useState('');
+  const [ lastName, setLastName ] = useState('');
+
 
   const handleSignUp = (firstName, lastName) => {
     clearErrors();
     firebase.auth().createUserWithEmailAndPassword(email, password)
       .then((userCredential) => {
         return firebase.database().ref('users/' + userCredential.user.uid).set({
-          uid: userCredential.user.uid,
           email: userCredential.user.email,
           firstname: firstName,
           lastname: lastName
@@ -32,14 +33,16 @@ const App = () => {
     firebase.auth().signInWithEmailAndPassword(email, password)
       .then((userCredential) => {
         console.log("User successfully logged in.");
-      })
-      .catch((error) => {
+      }).catch((error) => {
         handleError(error);
       })
   }
 
   const handleLogout = () => {
     firebase.auth().signOut().then(() => {
+      setUser("");
+      setFirstName("");
+      setLastName("");
     }).catch(() => {
       console.log('There was an error.')
     });
@@ -68,22 +71,24 @@ const App = () => {
     setPasswordErrorMessage('');
   }
 
-  const authListener = () => {
-    firebase.auth().onAuthStateChanged((userCredential) => {
+  useEffect(() =>{
+    let unsubscribe = firebase.auth().onAuthStateChanged((userCredential) => {
       if(userCredential){
         setUser(userCredential);
-        setUserId(userCredential.uid)
+
+          firebase.database().ref('users/' + user.uid).once('value')
+          .then(snapshot => {
+            setFirstName(snapshot.child("firstname").val());
+            setLastName(snapshot.child("lastname").val());
+          })
+          return () => unsubscribe();
       }
 
       else{
         setUser("");
       }
     })
-  }
-
-  useEffect(() =>{
-    authListener();
-  }, [])
+  },[firebase.auth()])
 
 
   return(
@@ -91,7 +96,8 @@ const App = () => {
       {user ?
         <Homepage
           handleLogout={handleLogout}
-          userId={userId}
+          firstName={firstName}
+          lastName={lastName}
         /> :
         <Login
           email={email}
