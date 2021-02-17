@@ -40,7 +40,7 @@ const Login = (props) => {
 
   useEffect(() =>{
     flagError();
-  })
+  },[])
 
   return(
     <div className="login">

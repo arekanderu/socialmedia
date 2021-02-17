@@ -9,9 +9,6 @@ const App = () => {
   const [ emailErrorMessage, setEmailErrorMessage ] = useState('');
   const [ passwordErrorMessage, setPasswordErrorMessage ] = useState('');
   const [ user, setUser ] = useState('');
-  const [ firstName, setFirstName] = useState('');
-  const [ lastName, setLastName ] = useState('');
-
 
   const handleSignUp = (firstName, lastName) => {
     clearErrors();
@@ -41,8 +38,6 @@ const App = () => {
   const handleLogout = () => {
     firebase.auth().signOut().then(() => {
       setUser("");
-      setFirstName("");
-      setLastName("");
     }).catch(() => {
       console.log('There was an error.')
     });
@@ -75,20 +70,14 @@ const App = () => {
     let unsubscribe = firebase.auth().onAuthStateChanged((userCredential) => {
       if(userCredential){
         setUser(userCredential);
-
-          firebase.database().ref('users/' + user.uid).once('value')
-          .then(snapshot => {
-            setFirstName(snapshot.child("firstname").val());
-            setLastName(snapshot.child("lastname").val());
-          })
-          return () => unsubscribe();
       }
 
       else{
         setUser("");
       }
+      return () => unsubscribe();
     })
-  },[firebase.auth()])
+  },[])
 
 
   return(
@@ -96,8 +85,7 @@ const App = () => {
       {user ?
         <Homepage
           handleLogout={handleLogout}
-          firstName={firstName}
-          lastName={lastName}
+          uid={user.uid}
         /> :
         <Login
           email={email}
