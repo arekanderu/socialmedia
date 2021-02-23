@@ -35,3 +35,22 @@ code {
   top: 1%;
   color: gray;
 }
+
+.close-button{
+  position: relative;
+  right: -1%;
+}
+
+#form-dialog-title{
+  margin-top: -50px;
+}
+
+.avatar{
+  position: absolute;
+}
+
+.name{
+  position: relative;
+  margin-top: -30px;
+  margin-left: 50px;
+}

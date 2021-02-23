@@ -8,9 +8,10 @@ import MenuIcon from '@material-ui/icons/Menu';
 import SupervisedUserCircleIcon from '@material-ui/icons/SupervisedUserCircle';
 import { makeStyles } from '@material-ui/core/styles';
 import firebase from '../config/database';
+import Wall from './wall';
 
 
-/*add first and last name.
+/*create a wall where you can post comments and has a textbox connected to firebase.
 */
 
 const useStyles = makeStyles(() => ({
@@ -50,6 +51,8 @@ const Homepage = (props) => {
           <Button color="inherit" onClick={handleLogout} >Logout</Button>
         </Toolbar>
       </AppBar>
+
+      <Wall firstName={firstName} lastName={lastName}/>
 
     </div>
   )
