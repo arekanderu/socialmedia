@@ -2,10 +2,27 @@ import React, { useState } from 'react';
 import { TextField, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Avatar } from '@material-ui/core';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 
-const Wall = (props) => {
+const Create = (props) => {
   const { firstName,
-          lastName } = props;
+          lastName,
+          firebase,
+          uid } = props;
   const [ open, setOpen] = useState(false);
+  const [ textValue, setTextValue ] = useState('');
+  const post = () => {
+    let ref = firebase.database().ref('Posts/' + uid),
+        currentDateTime = new Date().toLocaleString(),
+        contentEntry = textValue
+
+      let postData = {
+        content: contentEntry,
+        date: currentDateTime
+      }
+
+      ref.push(postData);
+      setTextValue('');
+      setOpen(false);
+  }
 
   return(
     <div className="wall">
@@ -14,6 +31,7 @@ const Wall = (props) => {
         placeholder = {"Whats on your mind, " + firstName}
         fullWidth
         onClick={() => setOpen(true)}
+        value = {textValue}
       />
 
         <Dialog open={open} onClose={open} aria-labelledby="form-dialog-title" fullWidth>
@@ -42,6 +60,8 @@ const Wall = (props) => {
               placeholder="Whats on your mind?"
               type="text"
               fullWidth
+              onChange={(e) => setTextValue(e.target.value)}
+              value={textValue}
             />
           </DialogContent>
 
@@ -49,7 +69,9 @@ const Wall = (props) => {
             <Button
               fullWidth
               color="primary"
-              variant="contained">
+              variant="contained"
+              onClick={post}
+            >
               Post
             </Button>
           </DialogActions>
@@ -58,4 +80,4 @@ const Wall = (props) => {
   )
 }
 
-export default Wall;
+export default Create;

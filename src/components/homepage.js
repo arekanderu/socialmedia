@@ -8,11 +8,8 @@ import MenuIcon from '@material-ui/icons/Menu';
 import SupervisedUserCircleIcon from '@material-ui/icons/SupervisedUserCircle';
 import { makeStyles } from '@material-ui/core/styles';
 import firebase from '../config/database';
-import Wall from './wall';
-
-
-/*create a wall where you can post comments and has a textbox connected to firebase.
-*/
+import Create from './create';
+import Posts from './posts';
 
 const useStyles = makeStyles(() => ({
   title: {
@@ -52,8 +49,12 @@ const Homepage = (props) => {
         </Toolbar>
       </AppBar>
 
-      <Wall firstName={firstName} lastName={lastName}/>
-
+      <Create
+        firstName={firstName}
+        lastName={lastName}
+        firebase={firebase}
+        uid={uid}/>
+      <Posts firebase={firebase} uid={uid}/>
     </div>
   )
 }
