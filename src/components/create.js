@@ -10,7 +10,7 @@ const Create = (props) => {
   const [ open, setOpen] = useState(false);
   const [ textValue, setTextValue ] = useState('');
   const post = () => {
-    let ref = firebase.database().ref('Posts/' + uid),
+    let ref = firebase.database().ref('posts/' + uid),
         currentDateTime = new Date().toLocaleString(),
         contentEntry = textValue
 

@@ -1,29 +1,43 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
+//Test if key value is changing or not reversing.
+//
 const Posts = (props) => {
   const { firebase,
           uid} = props;
+  const [ databasePosts, setDatabasePost ] = useState([]);
+  //const [ keyValue, setKeyValue ] = useState([]);
   const readUserData = () => {
-    //Test if key value is changing or not reversing.
-    //make the database posts appear.
     let arrayPosts = [],
         arrayKeyValue = [];
 
-    firebase.database().ref('Posts/' + uid).once('value', snapshot => {
-      snapshot.forEact(item => {
+    firebase.database().ref('posts/' + uid).once('value', snapshot => {
+      snapshot.forEach(item => {
 
-        let tempPost = item.val(),
-            tempKeyValue = item.key;
+        let tempPost = item.val();
+            //tempKeyValue = item.key;
 
-            arrayPosts.push(tempPost).reverse();
-            arrayKeyValue.push(tempKeyValue).reverse();
+            arrayPosts.push(tempPost);
+            //arrayKeyValue.push(tempKeyValue);
+
+            setDatabasePost(arrayPosts.reverse());
+            //setKeyValue(arrayKeyValue.reverse());
       })
     })
   }
 
+  useEffect(() =>{
+    readUserData();
+  },[])
+
   return(
     <div className="posts">
-
+      {Object.values(databasePosts).map(({content, date}, i) => (
+        <div>
+          <small>{date}</small>
+          <h3 key={i}>{content}</h3>
+        </div>
+      ))}
     </div>
   )
 }
