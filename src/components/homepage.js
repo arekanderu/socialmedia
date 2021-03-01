@@ -9,7 +9,6 @@ import SupervisedUserCircleIcon from '@material-ui/icons/SupervisedUserCircle';
 import { makeStyles } from '@material-ui/core/styles';
 import firebase from '../config/database';
 import Create from './create';
-import Posts from './posts';
 
 const useStyles = makeStyles(() => ({
   title: {
@@ -53,8 +52,9 @@ const Homepage = (props) => {
         firstName={firstName}
         lastName={lastName}
         firebase={firebase}
-        uid={uid}/>
-      <Posts firebase={firebase} uid={uid}/>
+        uid={uid}
+      />
+
     </div>
   )
 }
