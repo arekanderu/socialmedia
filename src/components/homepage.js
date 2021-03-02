@@ -22,15 +22,14 @@ const Homepage = (props) => {
   const classes = useStyles();
   const [ firstName, setFirstName] = useState('');
   const [ lastName, setLastName ] = useState('');
-  const config = () => firebase.database().ref('users/' + uid).once('value')
+
+  useEffect(() =>{
+    firebase.database().ref('users/' + uid).once('value')
                         .then(snapshot => {
                           setFirstName(snapshot.child("firstname").val());
                           setLastName(snapshot.child("lastname").val());
-  });
-
-  useEffect(() =>{
-    config();
-  },[])
+    });
+  },[uid])
 
   return(
     <div className="homepage">

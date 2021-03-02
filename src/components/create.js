@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { TextField, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Avatar } from '@material-ui/core';
+import { TextField, Button, Dialog, DialogActions, DialogContent, DialogTitle, Avatar } from '@material-ui/core';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 
 const Create = (props) => {
@@ -30,7 +30,7 @@ const Create = (props) => {
       setOpen(false);
   }
 
-  const readUserData = () => {
+  useEffect(() => {
     let arrayPosts = [];
 
     firebase.database().ref('posts/' + uid).on('value', snapshot => {
@@ -42,11 +42,8 @@ const Create = (props) => {
             setDatabasePost(arrayPosts.reverse());
       })
     })
-  }
 
-  useEffect(() =>{
-    readUserData();
-  }, [firebase])
+  }, [firebase, uid])
 
   return(
     <div className="wall">
@@ -76,6 +73,7 @@ const Create = (props) => {
                   </div>
                 </div>
                 <br />
+
             <TextField
               autoFocus
               margin="dense"

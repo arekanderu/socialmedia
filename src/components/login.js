@@ -39,8 +39,21 @@ const Login = (props) => {
   }
 
   useEffect(() =>{
-    flagError();
-  },[])
+    if(!clicked) {
+      if(emailErrorMessage !== '') {
+        setErrorEmail(true);
+      }
+
+      else if(passwordErrorMessage !== ''){
+        setErrorPassword(true);
+      }
+
+      else{
+        setErrorEmail(false);
+        setErrorPassword(false);
+      }
+    }
+  },[clicked, emailErrorMessage, passwordErrorMessage])
 
   return(
     <div className="login">
