@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { TextField, Button, Dialog, DialogActions, DialogContent, DialogTitle, Avatar } from '@material-ui/core';
+import { TextField, Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@material-ui/core';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import ProfileAvatar from './profileAvatar';
+import Posts from './posts';
 
 const Create = (props) => {
   const { firstName,
@@ -65,9 +67,7 @@ const Create = (props) => {
 
           <DialogContent>
               <div className="content-header">
-                <Avatar className="avatar" alt="picture" src="/static/images/avatar/1.jpg">
-                  <span>{firstName.substring(0,1)}{lastName.substring(0,1)}</span>
-                </Avatar>
+                <ProfileAvatar firstName={firstName} lastName={lastName}/>
                   <div className="name">
                     {firstName} {lastName}
                   </div>
@@ -98,14 +98,12 @@ const Create = (props) => {
           </DialogActions>
         </Dialog>
 
-    <div className="posts">
-      {Object.values(databasePosts).map(({content, date}, i) => (
-      <div key={i}>
-        <small>{date}</small>
-        <h3>{content}</h3>
-      </div>
-      ))}
-    </div>
+    <Posts
+      firstName={firstName}
+      lastName={lastName}
+      databasePosts={databasePosts}
+    />
+
     </div>
   )
 }
