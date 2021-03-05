@@ -15,7 +15,7 @@ const Posts = (props) => {
   return(
     <div className="posts">
     <br />
-    {/* <Container> */}
+    <Container>
       {Object.values(databasePosts).map(({content, date}, i) => (
         <Card variant="outlined" style={{marginBottom: 20}} >
           <CardHeader
@@ -44,12 +44,9 @@ const Posts = (props) => {
             </IconButton>
           </CardActions>
         </Card>
-
-
-
       ))}
 
-    {/* </Container> */}
+    </Container>
     </div>
   )
 }

@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import SupervisedUserCircleIcon from '@material-ui/icons/SupervisedUserCircle';
-import { TextField, Button } from '@material-ui/core';
+import { TextField, Button, InputAdornment, IconButton } from '@material-ui/core';
 import SignUp from './signup';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import IconButton from '@material-ui/core/IconButton';
 
 const Login = (props) => {
   const { email,
@@ -20,23 +18,6 @@ const Login = (props) => {
   const [ errorPassword, setErrorPassword ] = useState(false);
   const [ clicked, setClicked ] = useState(false);
   const [ showPassword, setShowPassword ] = useState(false);
-
-  const flagError = () => {
-    if(!clicked) {
-      if(emailErrorMessage !== '') {
-        setErrorEmail(true);
-      }
-
-      else if(passwordErrorMessage !== ''){
-        setErrorPassword(true);
-      }
-
-      else{
-        setErrorEmail(false);
-        setErrorPassword(false);
-      }
-    }
-  }
 
   useEffect(() =>{
     if(!clicked) {
