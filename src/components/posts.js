@@ -1,6 +1,9 @@
 import React from 'react';
-import { Container, List, ListItem, Divider, ListItemText, ListItemAvatar } from '@material-ui/core';
+import { Container, Card, CardHeader, IconButton, CardContent, CardActions } from '@material-ui/core';
 import ProfileAvatar from './profileAvatar';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 
 const Posts = (props) => {
   const { databasePosts,
@@ -12,32 +15,41 @@ const Posts = (props) => {
   return(
     <div className="posts">
     <br />
-    <Container>
+    {/* <Container> */}
       {Object.values(databasePosts).map(({content, date}, i) => (
-        <List>
-          <ListItem alignItems="flex-start">
-            <ListItemAvatar>
-             <ProfileAvatar firstName={firstName} lastName={lastName}/>
-             </ListItemAvatar>
-            <ListItemText primary={fullName} secondary={
-              <div className="content">
-                <small>
-                  {date}
-                </small>
+        <Card variant="outlined" style={{marginBottom: 20}} >
+          <CardHeader
+            avatar={<ProfileAvatar firstName={firstName} lastName={lastName}/>}
+            action={
+              <IconButton aria-label="settings">
+                <MoreVertIcon />
+              </IconButton>
+            }
+            title={fullName}
+            subheader={date}
+          />
 
-                <br /><br />
-                <span>
-                  {content}
-                </span>
-              </div>
-                }>
-            </ListItemText>
-          </ListItem>
-          <Divider variant="inset" component="li" />
-        </List>
+          <CardContent>
+          {content}
+          </CardContent>
+
+          <CardActions>
+            <IconButton size="small">
+              <FavoriteIcon />
+              <small className="comment-action">Like</small>
+            </IconButton>
+            <IconButton size="small">
+              <ChatBubbleOutlineIcon />
+              <small className="comment-action">Comment</small>
+            </IconButton>
+          </CardActions>
+        </Card>
+
+
+
       ))}
 
-    </Container>
+    {/* </Container> */}
     </div>
   )
 }
