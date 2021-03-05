@@ -4,6 +4,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import SupervisedUserCircleIcon from '@material-ui/icons/SupervisedUserCircle';
 import firebase from '../config/database';
 import Create from './create';
+import ProfileAvatar from './profileAvatar';
 
 const useStyles = makeStyles(() => ({
   title: {
@@ -37,8 +38,10 @@ const Homepage = (props) => {
             <SupervisedUserCircleIcon />
             Social Network
           </Typography>
-           Welcome {firstName} {lastName} |
-          <Button color="inherit" onClick={handleLogout} >Logout</Button>
+
+          <ProfileAvatar firstName={firstName} lastName={lastName}/>
+          &nbsp;{firstName} |
+          <Button color="inherit" onClick={handleLogout} >Log out</Button>
         </Toolbar>
       </AppBar>
 
