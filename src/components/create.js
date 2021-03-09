@@ -12,7 +12,6 @@ const Create = (props) => {
   const [ open, setOpen] = useState(false);
   const [ textValue, setTextValue ] = useState('');
   const [ databasePosts, setDatabasePost ] = useState([]);
-  // const [ enableButton, setEnableButton] = useState(true);
 
   const handleClose = () => {
     setOpen(false);
@@ -23,11 +22,6 @@ const Create = (props) => {
         currentDateTime = new Date().toLocaleString(),
         contentEntry = textValue;
 
-      // if(textValue.length !== 0) {
-      //   // setEnableButton(false);
-      // }
-
-      // else {
         let postData = {
           content: contentEntry,
           date: currentDateTime
@@ -36,8 +30,6 @@ const Create = (props) => {
         ref.push(postData);
         setTextValue('');
         setOpen(false);
-
-     // }
   }
 
   useEffect(() => {
@@ -57,6 +49,7 @@ const Create = (props) => {
 
   return(
     <div className="wall">
+      {console.log(textValue.length !== 0)}
       <br />
       <TextField
         placeholder = {"Whats on your mind, " + firstName}
@@ -101,7 +94,7 @@ const Create = (props) => {
               color="primary"
               variant="contained"
               onClick={post}
-              // disabled={enableButton}
+              disabled={textValue.length === 0}
             >
               Post
             </Button>
