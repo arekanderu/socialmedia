@@ -12,6 +12,7 @@ const Create = (props) => {
   const [ open, setOpen] = useState(false);
   const [ textValue, setTextValue ] = useState('');
   const [ databasePosts, setDatabasePost ] = useState([]);
+  // const [ enableButton, setEnableButton] = useState(true);
 
   const handleClose = () => {
     setOpen(false);
@@ -20,16 +21,23 @@ const Create = (props) => {
   const post = () => {
     let ref = firebase.database().ref('posts/' + uid),
         currentDateTime = new Date().toLocaleString(),
-        contentEntry = textValue
+        contentEntry = textValue;
 
-      let postData = {
-        content: contentEntry,
-        date: currentDateTime
-      }
+      // if(textValue.length !== 0) {
+      //   // setEnableButton(false);
+      // }
 
-      ref.push(postData);
-      setTextValue('');
-      setOpen(false);
+      // else {
+        let postData = {
+          content: contentEntry,
+          date: currentDateTime
+        }
+
+        ref.push(postData);
+        setTextValue('');
+        setOpen(false);
+
+     // }
   }
 
   useEffect(() => {
@@ -83,6 +91,7 @@ const Create = (props) => {
               fullWidth
               onChange={(e) => setTextValue(e.target.value)}
               value={textValue}
+              autoComplete="off"
             />
           </DialogContent>
 
@@ -92,6 +101,7 @@ const Create = (props) => {
               color="primary"
               variant="contained"
               onClick={post}
+              // disabled={enableButton}
             >
               Post
             </Button>

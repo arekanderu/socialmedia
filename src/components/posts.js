@@ -1,9 +1,9 @@
 import React from 'react';
 import { Container, Card, CardHeader, IconButton, CardContent, CardActions } from '@material-ui/core';
 import ProfileAvatar from './profileAvatar';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
+import Popover from './popover';
 
 const Posts = (props) => {
   const { databasePosts,
@@ -22,7 +22,7 @@ const Posts = (props) => {
             avatar={<ProfileAvatar firstName={firstName} lastName={lastName}/>}
             action={
               <IconButton aria-label="settings">
-                <MoreVertIcon />
+                <Popover />
               </IconButton>
             }
             title={fullName}
@@ -45,7 +45,6 @@ const Posts = (props) => {
           </CardActions>
         </Card>
       ))}
-
     </Container>
     </div>
   )
