@@ -35,21 +35,21 @@ const Create = (props) => {
   useEffect(() => {
     let arrayPosts = [];
 
-    firebase.database().ref('posts/' + uid).on('value', snapshot => {
-      snapshot.forEach(item => {
+    const database = () => {
+      firebase.database().ref('posts/' + uid).on('value', snapshot => {
+        snapshot.forEach(item => {
 
-        let tempPost = item.val();
+          let tempPost = item.val();
 
-            arrayPosts.push(tempPost);
-            setDatabasePost(arrayPosts.reverse());
+              arrayPosts.push(tempPost);
+              setDatabasePost(arrayPosts.reverse());
+        })
       })
-    })
-
-  }, [firebase, uid])
-
+    }; database();
+  }, // eslint-disable-next-line
+  [uid] )
   return(
     <div className="wall">
-      {console.log(textValue.length !== 0)}
       <br />
       <TextField
         placeholder = {"Whats on your mind, " + firstName}

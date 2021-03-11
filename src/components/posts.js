@@ -17,7 +17,7 @@ const Posts = (props) => {
     <br />
     <Container>
       {Object.values(databasePosts).map(({content, date}, i) => (
-        <Card variant="outlined" style={{marginBottom: 20}} >
+        <Card variant="outlined" style={{marginBottom: 20}} key={i}>
           <CardHeader
             avatar={<ProfileAvatar firstName={firstName} lastName={lastName}/>}
             action={
@@ -30,7 +30,7 @@ const Posts = (props) => {
           />
 
           <CardContent>
-          {content}
+            {content}
           </CardContent>
 
           <CardActions>
