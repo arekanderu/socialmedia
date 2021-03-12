@@ -18,6 +18,7 @@ const Create = (props) => {
   }
 
   const post = () => {
+    setDatabasePost('');
     let ref = firebase.database().ref('posts/' + uid),
         currentDateTime = new Date().toLocaleString(),
         contentEntry = textValue;
@@ -30,24 +31,22 @@ const Create = (props) => {
         ref.push(postData);
         setTextValue('');
         setOpen(false);
+
   }
 
   useEffect(() => {
-    let arrayPosts = [];
-
     const database = () => {
       firebase.database().ref('posts/' + uid).on('value', snapshot => {
+        let arrayPosts = [];
         snapshot.forEach(item => {
 
-          let tempPost = item.val();
 
-              arrayPosts.push(tempPost);
-              setDatabasePost(arrayPosts.reverse());
+            arrayPosts.push(item.val());
+            setDatabasePost(arrayPosts.reverse());
         })
       })
     }; database();
-  }, // eslint-disable-next-line
-  [uid] )
+  }, [firebase, uid])
   return(
     <div className="wall">
       <br />
