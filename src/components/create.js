@@ -12,13 +12,16 @@ const Create = (props) => {
   const [ open, setOpen] = useState(false);
   const [ textValue, setTextValue ] = useState('');
   const [ databasePosts, setDatabasePost ] = useState([]);
+  const [ error, setError ] = useState('');
 
   const handleClose = () => {
     setOpen(false);
   }
 
   const post = () => {
-    setDatabasePost('');
+
+    if(textValue !== " ") {
+
     let ref = firebase.database().ref('posts/' + uid),
         currentDateTime = new Date().toLocaleString(),
         contentEntry = textValue;
@@ -29,9 +32,18 @@ const Create = (props) => {
         }
 
         ref.push(postData);
-        setTextValue('');
-        setOpen(false);
+        resetValues();
+    }
 
+    else{
+      setError('This post appears to be blank. Please write something.');
+    }
+  }
+
+  const resetValues = () => {
+    setTextValue('');
+    setOpen(false);
+    setError('');
   }
 
   useEffect(() => {
@@ -39,14 +51,13 @@ const Create = (props) => {
       firebase.database().ref('posts/' + uid).on('value', snapshot => {
         let arrayPosts = [];
         snapshot.forEach(item => {
-
-
             arrayPosts.push(item.val());
             setDatabasePost(arrayPosts.reverse());
         })
       })
     }; database();
   }, [firebase, uid])
+
   return(
     <div className="wall">
       <br />
@@ -98,6 +109,7 @@ const Create = (props) => {
               Post
             </Button>
           </DialogActions>
+          <p className="alert">{error}</p>
         </Dialog>
 
     <Posts

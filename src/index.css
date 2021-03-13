@@ -58,3 +58,9 @@ code {
 .comment-action{
   margin-left: 10px;
 }
+
+.alert{
+  color: red;
+  margin-left: 11px;
+  margin-top: -5px;
+}
