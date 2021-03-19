@@ -46,6 +46,11 @@ const Create = (props) => {
     setTitle('Create Post');
   }
 
+  const editPost = () => {
+    setOpen(true);
+    setTitle('Edit Post');
+  }
+
   const resetValues = () => {
     setTextValue('');
     setOpen(false);
@@ -122,7 +127,7 @@ const Create = (props) => {
       firstName={firstName}
       lastName={lastName}
       databasePosts={databasePosts}
-      open={setOpen}
+      editPost={editPost}
     />
 
     </div>

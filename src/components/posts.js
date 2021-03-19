@@ -9,7 +9,7 @@ const Posts = (props) => {
   const { databasePosts,
           firstName,
           lastName,
-          open } = props;
+          editPost } = props;
 
   const fullName = firstName + ' ' + lastName;
 
@@ -23,7 +23,7 @@ const Posts = (props) => {
             avatar={<ProfileAvatar firstName={firstName} lastName={lastName}/>}
             action={
               <IconButton aria-label="settings">
-                <Popover openDialog={open}/>
+                <Popover editPost={editPost}/>
               </IconButton>
             }
             title={fullName}
