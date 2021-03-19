@@ -4,7 +4,7 @@ import Popover from '@material-ui/core/Popover';
 import PopupState, { bindTrigger, bindPopover } from 'material-ui-popup-state';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
-export default function PopoverPopupState() {
+export default function PopoverPopupState(props) {
   return (
     <PopupState variant="popover" popupId="demo-popup-popover">
       {(popupState) => (
@@ -22,7 +22,7 @@ export default function PopoverPopupState() {
             }}
           >
             <Box p={3}>
-              <p>Edit</p>
+              <p onClick={() => props.openDialog(true)}>Edit</p>
               <p>Delete</p>
             </Box>
           </Popover>

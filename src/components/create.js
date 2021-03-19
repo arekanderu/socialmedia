@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { TextField, Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@material-ui/core';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
-import ProfileAvatar from './profileAvatar';
+import ProfileAvatar from './profileavatar';
 import Posts from './posts';
 
 const Create = (props) => {
@@ -9,10 +9,11 @@ const Create = (props) => {
           lastName,
           firebase,
           uid } = props;
-  const [ open, setOpen] = useState(false);
+  const [ open, setOpen ] = useState(false);
   const [ textValue, setTextValue ] = useState('');
   const [ databasePosts, setDatabasePost ] = useState([]);
   const [ error, setError ] = useState('');
+  const [ title, setTitle ] = useState('');
 
   const handleClose = () => {
     setOpen(false);
@@ -40,6 +41,11 @@ const Create = (props) => {
     }
   }
 
+  const createPost = () => {
+    setOpen(true);
+    setTitle('Create Post');
+  }
+
   const resetValues = () => {
     setTextValue('');
     setOpen(false);
@@ -64,7 +70,7 @@ const Create = (props) => {
       <TextField
         placeholder = {"Whats on your mind, " + firstName}
         fullWidth
-        onClick={() => setOpen(true)}
+        onClick={() => createPost()}
         value = {textValue}
       />
 
@@ -74,7 +80,7 @@ const Create = (props) => {
               <HighlightOffIcon />
             </Button>
             </DialogActions>
-          <DialogTitle id="form-dialog-title">Create A Post</DialogTitle>
+          <DialogTitle id="form-dialog-title">{title}</DialogTitle>
 
           <DialogContent>
               <div className="content-header">
@@ -116,6 +122,7 @@ const Create = (props) => {
       firstName={firstName}
       lastName={lastName}
       databasePosts={databasePosts}
+      open={setOpen}
     />
 
     </div>
