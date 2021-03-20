@@ -7,6 +7,7 @@ import Popover from './popover';
 
 const Posts = (props) => {
   const { databasePosts,
+          databaseKeys,
           firstName,
           lastName,
           editPost } = props;
@@ -23,7 +24,11 @@ const Posts = (props) => {
             avatar={<ProfileAvatar firstName={firstName} lastName={lastName}/>}
             action={
               <IconButton aria-label="settings">
-                <Popover editPost={editPost}/>
+                <Popover
+                  editPost={editPost}
+                  content={content}
+                  databaseKey={databaseKeys[i]}
+                />
               </IconButton>
             }
             title={fullName}

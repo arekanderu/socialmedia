@@ -1,9 +1,10 @@
 import React from 'react';
-import Box from '@material-ui/core/Box';
 import Popover from '@material-ui/core/Popover';
 import PopupState, { bindTrigger, bindPopover } from 'material-ui-popup-state';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import { Button } from '@material-ui/core';
+import { Box, Button } from '@material-ui/core';
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 export default function PopoverPopupState(props) {
   return (
@@ -23,8 +24,15 @@ export default function PopoverPopupState(props) {
             }}
           >
             <Box p={3}>
-              <Button size="small" onClick={() => props.editPost()}>Edit post</Button>
-              <p>Delete</p>
+              <Button size="small" onClick={() => props.editPost(props.content, props.databaseKey)}>
+                <EditIcon/>&nbsp;
+                Edit post
+              </Button>
+              <hr />
+              <Button size="small" >
+                <DeleteIcon/>&nbsp;
+                Move to trash
+              </Button>
             </Box>
           </Popover>
         </div>

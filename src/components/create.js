@@ -12,8 +12,11 @@ const Create = (props) => {
   const [ open, setOpen ] = useState(false);
   const [ textValue, setTextValue ] = useState('');
   const [ databasePosts, setDatabasePost ] = useState([]);
+  const [ databaseKeys, setDatabaseKeys ] = useState([]);
   const [ error, setError ] = useState('');
   const [ title, setTitle ] = useState('');
+  const [ action, setAction ] = useState('');
+  const [ databaseKey, setDatabaseKey ] = useState('');
 
   const handleClose = () => {
     setOpen(false);
@@ -21,11 +24,11 @@ const Create = (props) => {
 
   const post = () => {
 
-    if(textValue !== " ") {
+    if(textValue !== " " && action === 'Post') {
 
-    let ref = firebase.database().ref('posts/' + uid),
-        currentDateTime = new Date().toLocaleString(),
-        contentEntry = textValue;
+      let ref = firebase.database().ref('posts/' + uid),
+          currentDateTime = new Date().toLocaleString(),
+          contentEntry = textValue;
 
         let postData = {
           content: contentEntry,
@@ -36,6 +39,17 @@ const Create = (props) => {
         resetValues();
     }
 
+    else if(textValue !== " " && action === 'Save'){
+
+     let currentDateTime = new Date().toLocaleString();
+
+     firebase.database().ref('posts/' + uid).child(databaseKey).update({
+            content: textValue,
+            date: currentDateTime
+      });
+      handleClose();
+    }
+
     else{
       setError('This post appears to be blank. Please write something.');
     }
@@ -44,11 +58,15 @@ const Create = (props) => {
   const createPost = () => {
     setOpen(true);
     setTitle('Create Post');
+    setAction('Post');
   }
 
-  const editPost = () => {
+  const editPost = (content, databaseKey) => {
     setOpen(true);
     setTitle('Edit Post');
+    setAction('Save');
+    setTextValue(content);
+    setDatabaseKey(databaseKey);
   }
 
   const resetValues = () => {
@@ -60,9 +78,14 @@ const Create = (props) => {
   useEffect(() => {
     const database = () => {
       firebase.database().ref('posts/' + uid).on('value', snapshot => {
-        let arrayPosts = [];
+        let arrayPosts = [],
+            arrayKeyValue = [];
+
         snapshot.forEach(item => {
             arrayPosts.push(item.val());
+            arrayKeyValue.push(item.key);
+
+            setDatabaseKeys(arrayKeyValue.reverse());
             setDatabasePost(arrayPosts.reverse());
         })
       })
@@ -71,12 +94,12 @@ const Create = (props) => {
 
   return(
     <div className="wall">
-      <br />
+      <br />S
       <TextField
-        placeholder = {"Whats on your mind, " + firstName}
+        placeholder={"Whats on your mind, " + firstName}
         fullWidth
         onClick={() => createPost()}
-        value = {textValue}
+        value={textValue}
       />
 
         <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title" fullWidth>
@@ -99,7 +122,6 @@ const Create = (props) => {
             <TextField
               autoFocus
               margin="dense"
-              id="name"
               placeholder="Whats on your mind?"
               type="text"
               fullWidth
@@ -117,7 +139,7 @@ const Create = (props) => {
               onClick={post}
               disabled={textValue.length === 0}
             >
-              Post
+              {action}
             </Button>
           </DialogActions>
           <p className="alert">{error}</p>
@@ -127,6 +149,7 @@ const Create = (props) => {
       firstName={firstName}
       lastName={lastName}
       databasePosts={databasePosts}
+      databaseKeys={databaseKeys}
       editPost={editPost}
     />
 
