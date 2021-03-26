@@ -94,7 +94,7 @@ const Create = (props) => {
 
   return(
     <div className="wall">
-      <br />S
+      <br />
       <TextField
         placeholder={"Whats on your mind, " + firstName}
         fullWidth
@@ -151,6 +151,7 @@ const Create = (props) => {
       databasePosts={databasePosts}
       databaseKeys={databaseKeys}
       editPost={editPost}
+      open={open}
     />
 
     </div>

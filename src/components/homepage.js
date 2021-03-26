@@ -21,7 +21,7 @@ const Homepage = (props) => {
 
   useEffect(() =>{
     firebase.database().ref('users/' + uid).once('value')
-                        .then(snapshot => {
+                       .then(snapshot => {
                           setFirstName(snapshot.child("firstname").val());
                           setLastName(snapshot.child("lastname").val());
     });

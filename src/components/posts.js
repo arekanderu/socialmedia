@@ -10,7 +10,8 @@ const Posts = (props) => {
           databaseKeys,
           firstName,
           lastName,
-          editPost } = props;
+          editPost,
+          open } = props;
 
   const fullName = firstName + ' ' + lastName;
 
