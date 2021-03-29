@@ -19,6 +19,7 @@ const Create = (props) => {
   const [ databaseKey, setDatabaseKey ] = useState('');
 
   const handleClose = () => {
+    setTextValue('');
     setOpen(false);
   }
 
@@ -47,7 +48,8 @@ const Create = (props) => {
             content: textValue,
             date: currentDateTime
       });
-      handleClose();
+
+     handleClose();
     }
 
     else{
@@ -89,8 +91,18 @@ const Create = (props) => {
             setDatabasePost(arrayPosts.reverse());
         })
       })
-    }; database();
-  }, [firebase, uid])
+    };
+
+    const clearTextField = () => {
+      if(open === false && action === 'Save') {
+        setTextValue('');
+      }
+    };
+
+    database();
+    clearTextField();
+
+  }, [firebase, uid, action, open])
 
   return(
     <div className="wall">
