@@ -22,6 +22,9 @@ const Signup = (props) => {
   const [ errorPassword, setErrorPassword ] = useState(false);
   const [ showPassword, setShowPassword ] = useState(false);
 
+  /**
+   * A validation to make sure that first name and last name are populated before sending the data.
+   */
   const validate = () => {
 
     if(firstName === '' && lastName === ''){
@@ -46,6 +49,10 @@ const Signup = (props) => {
     }
   }
 
+  useEffect(() =>{
+  /**
+   * If missing any data it will flag it to error.
+   */
   const flagError = () => {
     if(emailErrorMessage !== '') {
       setErrorEmail(true);
@@ -61,7 +68,6 @@ const Signup = (props) => {
     }
   }
 
-  useEffect(() =>{
     flagError();
   })
 

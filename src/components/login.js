@@ -20,20 +20,28 @@ const Login = (props) => {
   const [ showPassword, setShowPassword ] = useState(false);
 
   useEffect(() =>{
-    if(!clicked) {
-      if(emailErrorMessage !== '') {
-        setErrorEmail(true);
-      }
+    /**
+     * A validation to make sure that email and password are populated before sending the data.
+     */
+    const validate = () => {
+      if(!clicked) {
+        if(emailErrorMessage !== '') {
+          setErrorEmail(true);
+        }
 
-      else if(passwordErrorMessage !== ''){
-        setErrorPassword(true);
-      }
+        else if(passwordErrorMessage !== ''){
+          setErrorPassword(true);
+        }
 
-      else{
-        setErrorEmail(false);
-        setErrorPassword(false);
+        else{
+          setErrorEmail(false);
+          setErrorPassword(false);
+        }
       }
     }
+
+    validate();
+
   },[clicked, emailErrorMessage, passwordErrorMessage])
 
   return(

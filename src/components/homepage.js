@@ -20,11 +20,19 @@ const Homepage = (props) => {
   const [ lastName, setLastName ] = useState('');
 
   useEffect(() =>{
-    firebase.database().ref('users/' + uid).once('value')
+
+    /**
+     * Capture full name of the one logged in from the database.
+     */
+    const getFullName = () => {
+      firebase.database().ref('users/' + uid).once('value')
                        .then(snapshot => {
                           setFirstName(snapshot.child("firstname").val());
                           setLastName(snapshot.child("lastname").val());
-    });
+      });
+    }
+
+    getFullName();
   },[uid])
 
   return(

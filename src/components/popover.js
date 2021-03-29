@@ -7,7 +7,14 @@ import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 
 export default function PopoverPopupState(props) {
-
+  /**
+   *
+   * @param content The text value of the object intending to be edited.
+   * @param databaseKey The key value of the object intending to be edited.
+   * @param popupState The state of they popup wether its open or close.
+   *
+   * When you click on the Edit button it will pass the data to the function for later use then it will close the popup.
+   */
   const handleOnClick = (content, databaseKey, popupState) =>{
     props.editPost(content, databaseKey)
     popupState.close();

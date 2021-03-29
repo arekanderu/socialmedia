@@ -18,13 +18,25 @@ const Create = (props) => {
   const [ action, setAction ] = useState('');
   const [ databaseKey, setDatabaseKey ] = useState('');
 
+  /**
+   * Close the Dialog Box.
+   */
   const handleClose = () => {
-    setTextValue('');
     setOpen(false);
   }
 
+  /**
+   * First checks if the text value is not empty and the action is Post. If
+   * yes it will connect to the database and push the data from the text box
+   * in to the database with the current time and date.
+   *
+   * else if text value is not empty but action is Save it will connect to
+   * the database and update the post to the new content with the current
+   * time and date.
+   *
+   * else the post is currently empty and will flag an error.
+   */
   const post = () => {
-
     if(textValue !== " " && action === 'Post') {
 
       let ref = firebase.database().ref('posts/' + uid),
@@ -57,12 +69,24 @@ const Create = (props) => {
     }
   }
 
+  /**
+   * A function that will change the title and button name to constitute a
+   * creation of a new post.
+   */
   const createPost = () => {
     setOpen(true);
     setTitle('Create Post');
     setAction('Post');
   }
 
+  /**
+   *
+   * @param content the new text value.
+   * @param databaseKey the key of the text value you want to edit.
+   *
+   * A function that will change the title and button name to constitue the
+   * update of a given post. It will also update the post.
+   */
   const editPost = (content, databaseKey) => {
     setOpen(true);
     setTitle('Edit Post');
@@ -71,6 +95,9 @@ const Create = (props) => {
     setDatabaseKey(databaseKey);
   }
 
+  /**
+   * Reset values of the text box, close the dialog box and remove any errors.
+   */
   const resetValues = () => {
     setTextValue('');
     setOpen(false);
@@ -78,6 +105,10 @@ const Create = (props) => {
   }
 
   useEffect(() => {
+    /**
+     * Gather all the post in the database of the logged on user and put it on
+     * the array in reverse so it can be viewed from newest to oldest.
+     */
     const database = () => {
       firebase.database().ref('posts/' + uid).on('value', snapshot => {
         let arrayPosts = [],
@@ -93,6 +124,10 @@ const Create = (props) => {
       })
     };
 
+    /**
+     * When you are on edit dialog box and decided to exit it will clear the text
+     * field.
+     */
     const clearTextField = () => {
       if(open === false && action === 'Save') {
         setTextValue('');
