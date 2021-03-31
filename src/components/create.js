@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { TextField, Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@material-ui/core';
+import { TextField, Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider } from '@material-ui/core';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import ProfileAvatar from './profileavatar';
 import Posts from './posts';
+import DialogBox from './dialogbox';
 
 const Create = (props) => {
   const { firstName,
@@ -17,6 +18,8 @@ const Create = (props) => {
   const [ title, setTitle ] = useState('');
   const [ action, setAction ] = useState('');
   const [ databaseKey, setDatabaseKey ] = useState('');
+  const [ temp, setTemp ] = useState('');
+  const [ openDialog, setOpenDialog ] = useState(false);
 
   /**
    * Close the Dialog Box.
@@ -93,6 +96,7 @@ const Create = (props) => {
     setAction('Save');
     setTextValue(content);
     setDatabaseKey(databaseKey);
+    setTemp(content);
   }
 
   /**
@@ -102,6 +106,19 @@ const Create = (props) => {
     setTextValue('');
     setOpen(false);
     setError('');
+  }
+
+  const handleOnChange = (e) => {
+    setTextValue(e.target.value);
+
+    if(textValue !== temp){
+      setOpenDialog(true);
+    }
+    else{
+      setOpenDialog(false);
+    }
+
+    console.log(openDialog);
   }
 
   useEffect(() => {
@@ -134,10 +151,18 @@ const Create = (props) => {
       }
     };
 
+    // const openDialogBox = () => {
+    //   if(textValue !== temp){
+    //     setOpenDialog(true);
+    //     console.log(openDialog);
+    //   }
+    // }
+
     database();
     clearTextField();
+    // openDialogBox();
 
-  }, [firebase, uid, action, open])
+  }, [firebase, uid, action, open, openDialog, temp, textValue])
 
   return(
     <div className="wall">
@@ -156,6 +181,8 @@ const Create = (props) => {
             </Button>
             </DialogActions>
           <DialogTitle id="form-dialog-title">{title}</DialogTitle>
+          <Divider />
+          <br />
 
           <DialogContent>
               <div className="content-header">
@@ -172,10 +199,14 @@ const Create = (props) => {
               placeholder="Whats on your mind?"
               type="text"
               fullWidth
-              onChange={(e) => setTextValue(e.target.value)}
+              onChange={(e) => handleOnChange(e)}
               value={textValue}
               autoComplete="off"
             />
+
+            { temp === textValue ? 'yes' : 'no'}
+            { openDialog ? 'yes' : 'no' }
+
           </DialogContent>
 
           <DialogActions>
@@ -200,6 +231,8 @@ const Create = (props) => {
       editPost={editPost}
       open={open}
     />
+
+    <DialogBox />
 
     </div>
   )

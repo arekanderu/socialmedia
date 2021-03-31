@@ -20,7 +20,6 @@ const Homepage = (props) => {
   const [ lastName, setLastName ] = useState('');
 
   useEffect(() =>{
-
     /**
      * Capture full name of the one logged in from the database.
      */
