@@ -33,7 +33,6 @@ const DialogBox = (props) => {
           <DialogActions>
             <Button
               color="primary"
-              variant="contained"
               // onClick={}
             >
               {action}

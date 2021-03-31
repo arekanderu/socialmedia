@@ -19,13 +19,29 @@ const Create = (props) => {
   const [ action, setAction ] = useState('');
   const [ databaseKey, setDatabaseKey ] = useState('');
   const [ temp, setTemp ] = useState('');
+  const [ textChanged, setTextChanged ] = useState(false);
   const [ openDialog, setOpenDialog ] = useState(false);
+  const [ dialogTitle, setDialogTitle ] = useState('');
+  const [ dialogMessage, setDialogMessage ] = useState('');
+  const [ dialogActionName, setDialogActionName ] = useState('');
+  const [ dialogSecondaryActionName, setDialogSecondaryActionName ] = useState('');
 
   /**
-   * Close the Dialog Box.
+   * Close the Dialog Box. If its an update it will open a dialog box
+   * with the following dialog title and content questions.
    */
   const handleClose = () => {
-    setOpen(false);
+    if(action === 'Save' && textChanged === true){
+      setOpenDialog(true);
+      setDialogTitle('Unsaved changes');
+      setDialogMessage('Changes you made will not be saved.');
+      setDialogActionName('Keep Editing');
+      setDialogSecondaryActionName('Discard');
+    }
+
+    else{
+      setOpen(false);
+    }
   }
 
   /**
@@ -108,19 +124,6 @@ const Create = (props) => {
     setError('');
   }
 
-  const handleOnChange = (e) => {
-    setTextValue(e.target.value);
-
-    if(textValue !== temp){
-      setOpenDialog(true);
-    }
-    else{
-      setOpenDialog(false);
-    }
-
-    console.log(openDialog);
-  }
-
   useEffect(() => {
     /**
      * Gather all the post in the database of the logged on user and put it on
@@ -151,18 +154,21 @@ const Create = (props) => {
       }
     };
 
-    // const openDialogBox = () => {
-    //   if(textValue !== temp){
-    //     setOpenDialog(true);
-    //     console.log(openDialog);
-    //   }
-    // }
+    const textHasChanged = () => {
+      if(textValue !== temp){
+        setTextChanged(true);
+      }
+      else{
+        setTextChanged(false);
+      }
+      console.log(textChanged);
+    }
 
     database();
     clearTextField();
-    // openDialogBox();
+    textHasChanged();
 
-  }, [firebase, uid, action, open, openDialog, temp, textValue])
+  }, [firebase, uid, action, open, textChanged, temp, textValue])
 
   return(
     <div className="wall">
@@ -176,7 +182,7 @@ const Create = (props) => {
 
         <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title" fullWidth>
           <DialogActions>
-            <Button className="close-button" onClick={() => setOpen(false)} >
+            <Button className="close-button" onClick={() => handleClose()} >
               <HighlightOffIcon />
             </Button>
             </DialogActions>
@@ -199,14 +205,10 @@ const Create = (props) => {
               placeholder="Whats on your mind?"
               type="text"
               fullWidth
-              onChange={(e) => handleOnChange(e)}
+              onChange={(e) => setTextValue(e.target.value)}
               value={textValue}
               autoComplete="off"
             />
-
-            { temp === textValue ? 'yes' : 'no'}
-            { openDialog ? 'yes' : 'no' }
-
           </DialogContent>
 
           <DialogActions>
@@ -232,7 +234,13 @@ const Create = (props) => {
       open={open}
     />
 
-    <DialogBox />
+    <DialogBox
+      open={openDialog}
+      title={dialogTitle}
+      message={dialogMessage}
+      action={dialogActionName}
+      secondaryAction={dialogSecondaryActionName}
+    />
 
     </div>
   )
