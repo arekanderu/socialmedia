@@ -27,8 +27,8 @@ const Create = (props) => {
   const [ dialogSecondaryActionName, setDialogSecondaryActionName ] = useState('');
 
   /**
-   * Close the Dialog Box. If its an update it will open a dialog box
-   * with the following dialog title and content questions.
+   *If you made any changes to the text a dialog box will prompt you
+   *if want to save any changes that you made. Otherwise, it will just close.
    */
   const handleClose = () => {
     if(action === 'Save' && textChanged === true){
@@ -240,6 +240,8 @@ const Create = (props) => {
       message={dialogMessage}
       action={dialogActionName}
       secondaryAction={dialogSecondaryActionName}
+      openDialog={setOpenDialog}
+      mainDialog={setOpen}
     />
 
     </div>

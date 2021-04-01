@@ -7,19 +7,32 @@ const DialogBox = (props) => {
           title,
           message,
           action,
-          secondaryAction } = props;
+          secondaryAction,
+          openDialog,
+          mainDialog } = props;
 
   /**
    * Close the Dialog Box.
    */
-     const handleClose = () => {
-    }
+  const handleClose = () => {
+    openDialog(false);
+  }
+
+  /**
+   * Close dialog box and prompts.
+   */
+  const handleOnClick = () => {
+    openDialog(false);
+    mainDialog(false);
+  }
+
+
 
   return(
     <div className="dialog-box">
-      <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title" fullWidth>
+      <Dialog open={open} onClose={() => handleClose()} aria-labelledby="form-dialog-title" fullWidth>
           <DialogActions>
-            <Button className="close-button" >
+            <Button className="close-button" onClick={() => handleClose()}>
               <HighlightOffIcon />
             </Button>
           </DialogActions>
@@ -33,7 +46,7 @@ const DialogBox = (props) => {
           <DialogActions>
             <Button
               color="primary"
-              // onClick={}
+              onClick={() => handleClose()}
             >
               {action}
             </Button>
@@ -41,7 +54,7 @@ const DialogBox = (props) => {
             <Button
                color="primary"
                variant="contained"
-              //  onClick={}
+               onClick={() => handleOnClick()}
             >
               {secondaryAction}
             </Button>
