@@ -30,7 +30,8 @@ const Create = (props) => {
    *If you made any changes to the text a dialog box will prompt you
    *if want to save any changes that you made. Otherwise, it will just close.
    */
-  const handleClose = () => {
+  const handleClose = (event) => {
+    console.log(event);
     if(action === 'Save' && textChanged === true){
       setOpenDialog(true);
       setDialogTitle('Unsaved changes');
@@ -40,6 +41,7 @@ const Create = (props) => {
     }
 
     else{
+      setOpenDialog(false);
       setOpen(false);
     }
   }
@@ -55,7 +57,9 @@ const Create = (props) => {
    *
    * else the post is currently empty and will flag an error.
    */
-  const post = () => {
+  const post = (event) => {
+    setOpenDialog(event);
+    console.log(openDialog);
     if(textValue !== " " && action === 'Post') {
 
       let ref = firebase.database().ref('posts/' + uid),
@@ -71,8 +75,7 @@ const Create = (props) => {
         resetValues();
     }
 
-    else if(textValue !== " " && action === 'Save'){
-
+    else if(textChanged === true && action === 'Save'){
      let currentDateTime = new Date().toLocaleString();
 
      firebase.database().ref('posts/' + uid).child(databaseKey).update({
@@ -155,13 +158,7 @@ const Create = (props) => {
     };
 
     const textHasChanged = () => {
-      if(textValue !== temp){
-        setTextChanged(true);
-      }
-      else{
-        setTextChanged(false);
-      }
-      console.log(textChanged);
+      textValue !== temp ? setTextChanged(true) : setTextChanged(false);
     }
 
     database();
@@ -182,7 +179,7 @@ const Create = (props) => {
 
         <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title" fullWidth>
           <DialogActions>
-            <Button className="close-button" onClick={() => handleClose()} >
+            <Button className="close-button" onClick={(e) => handleClose(e)} >
               <HighlightOffIcon />
             </Button>
             </DialogActions>
@@ -216,8 +213,8 @@ const Create = (props) => {
               fullWidth
               color="primary"
               variant="contained"
-              onClick={post}
-              disabled={textValue.length === 0}
+              onClick={() => post(false)}
+              disabled={textValue.length === 0 || textChanged === false}
             >
               {action}
             </Button>
@@ -242,6 +239,8 @@ const Create = (props) => {
       secondaryAction={dialogSecondaryActionName}
       openDialog={setOpenDialog}
       mainDialog={setOpen}
+      textValue={setTextValue}
+      temp={temp}
     />
 
     </div>

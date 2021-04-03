@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider } from '@material-ui/core';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 
@@ -9,13 +9,16 @@ const DialogBox = (props) => {
           action,
           secondaryAction,
           openDialog,
-          mainDialog } = props;
+          mainDialog,
+          textValue,
+          temp } = props;
 
   /**
    * Close the Dialog Box.
    */
   const handleClose = () => {
     openDialog(false);
+    textValue(temp);
   }
 
   /**
@@ -30,7 +33,7 @@ const DialogBox = (props) => {
 
   return(
     <div className="dialog-box">
-      <Dialog open={open} onClose={() => handleClose()} aria-labelledby="form-dialog-title" fullWidth>
+      <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title" fullWidth>
           <DialogActions>
             <Button className="close-button" onClick={() => handleClose()}>
               <HighlightOffIcon />
