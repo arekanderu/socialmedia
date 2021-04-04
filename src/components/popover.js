@@ -17,13 +17,12 @@ export default function PopoverPopupState(props) {
    */
   const handleOnClick = (action, content, databaseKey, popupState) =>{
     if(action === 'edit'){
-      props.editPost(content, databaseKey)
+      props.editPost(content, databaseKey);
     }
 
     else{
-
+      props.deletePost(databaseKey);
     }
-
     popupState.close();
   };
 
@@ -44,12 +43,12 @@ export default function PopoverPopupState(props) {
             }}
           >
             <Box p={2}>
-              <Button size="small" onClick={() => handleOnClick(props.content, props.databaseKey, popupState)}>
+              <Button size="small" onClick={() => handleOnClick('edit', props.content, props.databaseKey, popupState)}>
                 <EditIcon/>&nbsp;
                 Edit post
               </Button>
               <hr />
-              <Button size="small" onClick={() => handleOnClick(props.databaseKey)}>
+              <Button size="small" onClick={() => handleOnClick('delete', '', props.databaseKey, popupState)}>
                 <DeleteIcon/>&nbsp;
                 Move to trash
               </Button>

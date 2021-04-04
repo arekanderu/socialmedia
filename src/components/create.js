@@ -57,8 +57,6 @@ const Create = (props) => {
    * else the post is currently empty and will flag an error.
    */
   const post = (event) => {
-    setOpenDialog(event);
-    console.log(openDialog);
     if(textValue !== " " && action === 'Post') {
 
       let ref = firebase.database().ref('posts/' + uid),
@@ -115,6 +113,14 @@ const Create = (props) => {
     setTextValue(content);
     setDatabaseKey(databaseKey);
     setTemp(content);
+  }
+
+  const deletePost = () => {
+    setOpenDialog(true);
+    setDialogTitle('Move to Trash?');
+    setDialogMessage('This post will be deleted. Are you sure you want to continue?');
+    setDialogActionName('Cancel');
+    setDialogSecondaryActionName('Delete');
   }
 
   /**
@@ -228,6 +234,7 @@ const Create = (props) => {
       databaseKeys={databaseKeys}
       editPost={editPost}
       open={open}
+      deletePost={deletePost}
     />
 
     <DialogBox

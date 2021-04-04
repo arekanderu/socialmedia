@@ -10,7 +10,8 @@ const Posts = (props) => {
           databaseKeys,
           firstName,
           lastName,
-          editPost } = props;
+          editPost,
+          deletePost } = props;
 
   const fullName = firstName + ' ' + lastName;
 
@@ -28,6 +29,7 @@ const Posts = (props) => {
                   editPost={editPost}
                   content={content}
                   databaseKey={databaseKeys[i]}
+                  deletePost={deletePost}
                 />
               </IconButton>
             }
