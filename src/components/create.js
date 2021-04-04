@@ -30,8 +30,7 @@ const Create = (props) => {
    *If you made any changes to the text a dialog box will prompt you
    *if want to save any changes that you made. Otherwise, it will just close.
    */
-  const handleClose = (event) => {
-    console.log(event);
+  const handleClose = () => {
     if(action === 'Save' && textChanged === true){
       setOpenDialog(true);
       setDialogTitle('Unsaved changes');
@@ -83,7 +82,7 @@ const Create = (props) => {
             date: currentDateTime
       });
 
-     handleClose();
+      setOpen(false);
     }
 
     else{
@@ -177,9 +176,9 @@ const Create = (props) => {
         value={textValue}
       />
 
-        <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title" fullWidth>
+        <Dialog open={open} onClose={() => handleClose()} aria-labelledby="form-dialog-title" fullWidth>
           <DialogActions>
-            <Button className="close-button" onClick={(e) => handleClose(e)} >
+            <Button className="close-button" onClick={() => handleClose()} >
               <HighlightOffIcon />
             </Button>
             </DialogActions>

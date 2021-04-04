@@ -15,8 +15,15 @@ export default function PopoverPopupState(props) {
    *
    * When you click on the Edit button it will pass the data to the function for later use then it will close the popup.
    */
-  const handleOnClick = (content, databaseKey, popupState) =>{
-    props.editPost(content, databaseKey)
+  const handleOnClick = (action, content, databaseKey, popupState) =>{
+    if(action === 'edit'){
+      props.editPost(content, databaseKey)
+    }
+
+    else{
+
+    }
+
     popupState.close();
   };
 
@@ -42,7 +49,7 @@ export default function PopoverPopupState(props) {
                 Edit post
               </Button>
               <hr />
-              <Button size="small" >
+              <Button size="small" onClick={() => handleOnClick(props.databaseKey)}>
                 <DeleteIcon/>&nbsp;
                 Move to trash
               </Button>
