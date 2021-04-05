@@ -3,7 +3,7 @@ import { AppBar, Toolbar, Typography, Button, IconButton, makeStyles } from '@ma
 import MenuIcon from '@material-ui/icons/Menu';
 import SupervisedUserCircleIcon from '@material-ui/icons/SupervisedUserCircle';
 import firebase from '../config/database';
-import Create from './create';
+import Crud from './crud';
 import ProfileAvatar from './profileavatar';
 
 const useStyles = makeStyles(() => ({
@@ -52,7 +52,7 @@ const Homepage = (props) => {
         </Toolbar>
       </AppBar>
 
-      <Create
+      <Crud
         firstName={firstName}
         lastName={lastName}
         firebase={firebase}

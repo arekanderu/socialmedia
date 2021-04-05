@@ -10,8 +10,8 @@ const Posts = (props) => {
           databaseKeys,
           firstName,
           lastName,
-          editPost,
-          deletePost } = props;
+          editDialog,
+          deleteDialog } = props;
 
   const fullName = firstName + ' ' + lastName;
 
@@ -26,10 +26,10 @@ const Posts = (props) => {
             action={
               <IconButton aria-label="settings">
                 <Popover
-                  editPost={editPost}
+                  editDialog={editDialog}
                   content={content}
                   databaseKey={databaseKeys[i]}
-                  deletePost={deletePost}
+                  deleteDialog={deleteDialog}
                 />
               </IconButton>
             }

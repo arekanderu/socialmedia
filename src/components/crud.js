@@ -5,7 +5,7 @@ import ProfileAvatar from './profileavatar';
 import Posts from './posts';
 import DialogBox from './dialogbox';
 
-const Create = (props) => {
+const Crud = (props) => {
   const { firstName,
           lastName,
           firebase,
@@ -27,9 +27,10 @@ const Create = (props) => {
   const [ dialogSecondaryActionName, setDialogSecondaryActionName ] = useState('');
 
   /**
-   *If you made any changes to the text a dialog box will prompt you
-   *if want to save any changes that you made. Otherwise, it will just close.
-   */
+  * If you make any changes to the textbox while you are in 'Edit' mode
+  * and you try to exit it will prompt you if you want to save any
+  * changes. Otherwise, it will just close all dialog boxes.
+  */
   const handleClose = () => {
     if(action === 'Save' && textChanged === true){
       setOpenDialog(true);
@@ -46,17 +47,17 @@ const Create = (props) => {
   }
 
   /**
-   * First checks if the text value is not empty and the action is Post. If
-   * yes it will connect to the database and push the data from the text box
-   * in to the database with the current time and date.
+   * First checks if the text value is not empty and the action is 'Post'.
+   * If yes it will connect to the database and push the data from the
+   * textbox into the database with the current time and date.
    *
-   * else if text value is not empty but action is Save it will connect to
-   * the database and update the post to the new content with the current
-   * time and date.
+   * else if text value is changed from the orignal text and the action is
+   * 'Save' it will connect to the database and update the post to the new
+   * content with the current time and date.
    *
    * else the post is currently empty and will flag an error.
    */
-  const post = (event) => {
+  const post = () => {
     if(textValue !== " " && action === 'Post') {
 
       let ref = firebase.database().ref('posts/' + uid),
@@ -89,10 +90,10 @@ const Create = (props) => {
   }
 
   /**
-   * A function that will change the title and button name to constitute a
-   * creation of a new post.
+   * A function that will open a dialog box and change the title and
+   * button name to constitute a creation of a post.
    */
-  const createPost = () => {
+  const createDialog = () => {
     setOpen(true);
     setTitle('Create Post');
     setAction('Post');
@@ -103,10 +104,12 @@ const Create = (props) => {
    * @param content the new text value.
    * @param databaseKey the key of the text value you want to edit.
    *
-   * A function that will change the title and button name to constitue the
-   * update of a given post. It will also update the post.
+   * A function that will open a dialog box and change the title and
+   * button names of the dialog box to constitute an update operation.
+   * It will also update new state values to be used later to update the
+   * post.
    */
-  const editPost = (content, databaseKey) => {
+  const editDialog = (content, databaseKey) => {
     setOpen(true);
     setTitle('Edit Post');
     setAction('Save');
@@ -115,12 +118,28 @@ const Create = (props) => {
     setTemp(content);
   }
 
-  const deletePost = () => {
+  /**
+   * A function that will open the dialog box and change the titles, and
+   * button names of the dialog box to constitute a delete operation.
+   * It will also update databasekey state for later use.
+   */
+  const deleteDialog = (databaseKey) => {
     setOpenDialog(true);
     setDialogTitle('Move to Trash?');
     setDialogMessage('This post will be deleted. Are you sure you want to continue?');
     setDialogActionName('Cancel');
     setDialogSecondaryActionName('Delete');
+    setDatabaseKey(databaseKey);
+  }
+
+
+  /**
+   * Delete a post with the database key.
+   */
+  const deletePost = () => {
+    let ref = firebase.database().ref('posts/' + uid);
+
+      ref.child(databaseKey).remove();
   }
 
   /**
@@ -153,8 +172,8 @@ const Create = (props) => {
     };
 
     /**
-     * When you are on edit dialog box and decided to exit it will clear the text
-     * field.
+     * When you are on edit dialog box and decided to exit it will clear the main
+     * textfield.
      */
     const clearTextField = () => {
       if(open === false && action === 'Save') {
@@ -162,6 +181,9 @@ const Create = (props) => {
       }
     };
 
+    /**
+     * If the textvalue of the opened textbox changed it will set state to true.
+     */
     const textHasChanged = () => {
       textValue !== temp ? setTextChanged(true) : setTextChanged(false);
     }
@@ -178,7 +200,7 @@ const Create = (props) => {
       <TextField
         placeholder={"Whats on your mind, " + firstName}
         fullWidth
-        onClick={() => createPost()}
+        onClick={() => createDialog()}
         value={textValue}
       />
 
@@ -232,9 +254,9 @@ const Create = (props) => {
       lastName={lastName}
       databasePosts={databasePosts}
       databaseKeys={databaseKeys}
-      editPost={editPost}
+      editDialog={editDialog}
       open={open}
-      deletePost={deletePost}
+      deleteDialog={deleteDialog}
     />
 
     <DialogBox
@@ -247,10 +269,12 @@ const Create = (props) => {
       mainDialog={setOpen}
       textValue={setTextValue}
       temp={temp}
+      isDelete={dialogSecondaryActionName}
+      deletePost={deletePost}
     />
 
     </div>
   )
 }
 
-export default Create;
+export default Crud;

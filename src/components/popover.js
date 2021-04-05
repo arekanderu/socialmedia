@@ -17,11 +17,11 @@ export default function PopoverPopupState(props) {
    */
   const handleOnClick = (action, content, databaseKey, popupState) =>{
     if(action === 'edit'){
-      props.editPost(content, databaseKey);
+      props.editDialog(content, databaseKey);
     }
 
     else{
-      props.deletePost(databaseKey);
+      props.deleteDialog(databaseKey);
     }
     popupState.close();
   };

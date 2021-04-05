@@ -11,7 +11,9 @@ const DialogBox = (props) => {
           openDialog,
           mainDialog,
           textValue,
-          temp } = props;
+          temp,
+          isDelete,
+          deletePost } = props;
 
   /**
    * Close the Dialog Box.
@@ -22,14 +24,16 @@ const DialogBox = (props) => {
   }
 
   /**
-   * Close dialog box and prompts.
+   * If you are trying to delete a post then it will remove that post.
+   * It will then close all dialog boxes.
    */
   const handleOnClick = () => {
-    openDialog(false);
-    mainDialog(false);
+    if(isDelete === 'Delete'){
+      deletePost();
+    }
+      openDialog(false);
+      mainDialog(false);
   }
-
-
 
   return(
     <div className="dialog-box">
