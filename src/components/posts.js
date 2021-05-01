@@ -1,9 +1,9 @@
 import React from 'react';
-import { Container, Card, CardHeader, IconButton, CardContent, CardActions } from '@material-ui/core';
+import { Container, Card, CardHeader, IconButton, CardContent, CardActions, Divider, Grid } from '@material-ui/core';
 import ProfileAvatar from './profileavatar';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 import Popover from './popover';
+import Likes from './likes';
+import Comments from './comments';
 
 const Posts = (props) => {
   const { databasePosts,
@@ -41,16 +41,17 @@ const Posts = (props) => {
             {content}
           </CardContent>
 
-          <CardActions>
-            <IconButton size="small">
-              <FavoriteIcon />
-              <small className="comment-action">Like</small>
-            </IconButton>
-            <IconButton size="small">
-              <ChatBubbleOutlineIcon />
-              <small className="comment-action">Comment</small>
-            </IconButton>
-          </CardActions>
+          <Divider />
+            <CardActions>
+              <Grid item xs={8}>
+                <Likes />
+              </Grid>
+              <Grid item xs={4}>
+                <Comments />
+              </Grid>
+            </CardActions>
+          <Divider />
+          <br />
         </Card>
       ))}
     </Container>
