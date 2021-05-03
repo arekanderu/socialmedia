@@ -1,15 +1,17 @@
 import React from 'react';
-import FavoriteIcon from '@material-ui/icons/Favorite';
 import { IconButton } from '@material-ui/core';
+import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 
 const Likes = (props) => {
   const {  } = props;
 
   return(
+    <div className="like-icon">
     <IconButton size="small">
-      <FavoriteIcon />
-      <small className="comment-action">Like</small>
-    </IconButton>
+        <ThumbUpIcon />
+        <small className="like">Like</small>
+      </IconButton>
+    </div>
   )
 }
 

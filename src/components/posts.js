@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Card, CardHeader, IconButton, CardContent, CardActions, Divider, Grid } from '@material-ui/core';
+import { Container, Card, CardHeader, IconButton, CardContent, CardActions, Divider } from '@material-ui/core';
 import ProfileAvatar from './profileavatar';
 import Popover from './popover';
 import Likes from './likes';
@@ -43,12 +43,8 @@ const Posts = (props) => {
 
           <Divider />
             <CardActions>
-              <Grid item xs={8}>
-                <Likes />
-              </Grid>
-              <Grid item xs={4}>
-                <Comments />
-              </Grid>
+              <Likes />
+              <Comments />
             </CardActions>
           <Divider />
           <br />
