@@ -11,7 +11,9 @@ const Posts = (props) => {
           firstName,
           lastName,
           editDialog,
-          deleteDialog } = props;
+          deleteDialog,
+          firebase,
+          uid } = props;
 
   const fullName = firstName + ' ' + lastName;
 
@@ -43,7 +45,7 @@ const Posts = (props) => {
 
           <Divider />
             <CardActions>
-              <Likes />
+              <Likes firebase={firebase} uid={uid}/>
               <Comments />
             </CardActions>
           <Divider />
