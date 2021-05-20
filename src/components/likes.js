@@ -4,20 +4,37 @@ import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 
 const Likes = (props) => {
   const { firebase,
-          uid } = props;
+          uid,
+          databaseKey,
+          firstName,
+          lastName } = props;
 
   const [ like, setLike ] = useState(true);
   const [ color, setColor ] = useState("");
+  const fullName = firstName + ' ' + lastName;
 
-  const users = () => {
-      let ref = firebase.database().ref('posts/' + uid),
-          userName = "test";
+  const likePost = () => {
+    setLike(!like);
+    groupOfUserWhoLiked();
+  };
+
+  const groupOfUserWhoLiked = () => {
+    if(like === true){
+      let ref = firebase.database().ref('posts/' + uid ).child(databaseKey),
+        user = fullName,
+        liked = true;
 
         let postData = {
-          like: userName
+          user,
+          liked
         }
 
         ref.push(postData);
+    }
+
+    else{
+
+    }
   };
 
   useEffect(() =>{
@@ -32,7 +49,7 @@ const Likes = (props) => {
 
   return(
     <div className="like-icon">
-      <IconButton size="small" onClick={() => setLike(!like)}>
+      <IconButton size="small" onClick={() => likePost()}>
         <ThumbUpIcon style={{fill: color }}/>
         <small className="like" style={{color: color}}>Like</small>
       </IconButton>

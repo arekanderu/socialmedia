@@ -45,7 +45,13 @@ const Posts = (props) => {
 
           <Divider />
             <CardActions>
-              <Likes firebase={firebase} uid={uid}/>
+              <Likes
+                    firebase={firebase}
+                    uid={uid}
+                    databaseKey={databaseKeys[i]}
+                    firstName={firstName}
+                    lastName={lastName}
+              />
               <Comments />
             </CardActions>
           <Divider />

@@ -259,6 +259,7 @@ const Crud = (props) => {
       deleteDialog={deleteDialog}
       firebase={firebase}
       uid={uid}
+      databaseKey={databaseKey}
     />
 
     <DialogBox
