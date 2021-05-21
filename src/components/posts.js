@@ -46,18 +46,13 @@ const Posts = (props) => {
 
           <Divider />
             <CardActions>
-            {/* {Object.values(likes).map(({userName, uid}, i) => ( */}
-            {Object.values(likes).filter((userName, uid) => userName === undefined && uid === undefined)}
               <Likes
                     firebase={firebase}
                     uid={uid}
                     databaseKey={databaseKeys[i]}
                     firstName={firstName}
                     lastName={lastName}
-                    // useru={userName}
-                    // uidid={uid}
               />
-            {/* ))} */}
               <Comments />
             </CardActions>
           <Divider />

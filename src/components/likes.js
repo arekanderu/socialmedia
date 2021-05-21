@@ -7,9 +7,7 @@ const Likes = (props) => {
           uid,
           databaseKey,
           firstName,
-          lastName,
-          useru,
-          uidid } = props;
+          lastName } = props;
 
   const [ like, setLike ] = useState(true);
   const [ color, setColor ] = useState("");
@@ -21,7 +19,21 @@ const Likes = (props) => {
   };
 
   const groupOfUserWhoLiked = () => {
+    // if(like === true){
+    //   let ref = firebase.database().ref('posts/' + uid ).child(databaseKey + '/likes/');
 
+    //     //Change database
+    //     let postData = {
+    //       userName,
+    //       uid
+    //     };
+
+    //     ref.push(postData);
+    // }
+
+    // else{
+    //   //remove user name
+    // }
   };
 
   useEffect(() =>{
@@ -32,8 +44,27 @@ const Likes = (props) => {
       like ? setColor("#808080") : setColor("#0000FF");
     }
 
+    const appendLikeTable = () => {
+      const initUserName = '',
+            initUserId = '',
+            initLiked = false;
+      let ref = firebase.database().ref('posts/' + uid).child(databaseKey + '/likes/');
+        ref.once("value", snapshot => {
+          if(!snapshot.exists()){
+            let postData = {
+              userName: initUserName,
+              userId: initUserId,
+              liked: initLiked
+            };
+
+            ref.push(postData);
+          }
+       });
+    }
+
     colorChange();
-    })
+    appendLikeTable();
+    },[like, firebase, databaseKey, userName, uid]);
 
   return(
     <div className="like-icon">

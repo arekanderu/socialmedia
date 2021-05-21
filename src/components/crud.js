@@ -59,7 +59,6 @@ const Crud = (props) => {
    */
   const post = () => {
     if(textValue !== " " && action === 'Post') {
-
       let ref = firebase.database().ref('posts/' + uid),
           currentDateTime = new Date().toLocaleString(),
           contentEntry = textValue;
@@ -70,6 +69,7 @@ const Crud = (props) => {
         }
 
         ref.push(postData);
+
         resetValues();
     }
 
@@ -192,7 +192,7 @@ const Crud = (props) => {
     clearTextField();
     textHasChanged();
 
-  }, [firebase, uid, action, open, textChanged, temp, textValue])
+  }, [firebase, uid, action, open, textChanged, temp, textValue, databaseKey])
 
   return(
     <div className="wall">
