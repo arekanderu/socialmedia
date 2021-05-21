@@ -66,7 +66,7 @@ const Crud = (props) => {
 
         let postData = {
           content: contentEntry,
-          date: currentDateTime
+          date: currentDateTime,
         }
 
         ref.push(postData);

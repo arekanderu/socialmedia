@@ -21,7 +21,7 @@ const Posts = (props) => {
     <div className="posts">
     <br />
     <Container>
-      {Object.values(databasePosts).map(({content, date}, i) => (
+      {Object.values(databasePosts).map(({content, date, likes}, i) => (
         <Card variant="outlined" style={{marginBottom: 20}} key={i}>
           <CardHeader
             avatar={<ProfileAvatar firstName={firstName} lastName={lastName}/>}
@@ -41,17 +41,23 @@ const Posts = (props) => {
 
           <CardContent>
             {content}
+
           </CardContent>
 
           <Divider />
             <CardActions>
+            {/* {Object.values(likes).map(({userName, uid}, i) => ( */}
+            {Object.values(likes).filter((userName, uid) => userName === undefined && uid === undefined)}
               <Likes
                     firebase={firebase}
                     uid={uid}
                     databaseKey={databaseKeys[i]}
                     firstName={firstName}
                     lastName={lastName}
+                    // useru={userName}
+                    // uidid={uid}
               />
+            {/* ))} */}
               <Comments />
             </CardActions>
           <Divider />
