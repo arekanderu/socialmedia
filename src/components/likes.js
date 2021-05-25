@@ -6,34 +6,32 @@ const Likes = (props) => {
   const { firebase,
           uid,
           databaseKey,
-          firstName,
-          lastName } = props;
+          fullName } = props;
 
   const [ like, setLike ] = useState(true);
   const [ color, setColor ] = useState("");
-  const userName = firstName + ' ' + lastName;
 
+  /**
+   * COMMENT ME....
+   */
   const likePost = () => {
     setLike(!like);
-    groupOfUserWhoLiked();
-  };
 
-  const groupOfUserWhoLiked = () => {
-    // if(like === true){
-    //   let ref = firebase.database().ref('posts/' + uid ).child(databaseKey + '/likes/');
+    if(like === true){
 
-    //     //Change database
-    //     let postData = {
-    //       userName,
-    //       uid
-    //     };
+      let ref = firebase.database().ref('likes/');
 
-    //     ref.push(postData);
-    // }
+      let likeData = {
+        uid: uid,
+        postid: databaseKey,
+      }
 
-    // else{
-    //   //remove user name
-    // }
+      ref.push(likeData);
+    }
+
+    else{
+      //if unliked delete data.
+    }
   };
 
   useEffect(() =>{
@@ -44,27 +42,30 @@ const Likes = (props) => {
       like ? setColor("#808080") : setColor("#0000FF");
     }
 
-    const appendLikeTable = () => {
-      const initUserName = '',
-            initUserId = '',
-            initLiked = false;
-      let ref = firebase.database().ref('posts/' + uid).child(databaseKey + '/likes/');
-        ref.once("value", snapshot => {
-          if(!snapshot.exists()){
-            let postData = {
-              userName: initUserName,
-              userId: initUserId,
-              liked: initLiked
-            };
+    // /**
+    //  * The function initializes a like table and appends it to the existing
+    //  * post this will be used later to see which users liked the post.
+    //  */
+    // const appendLikeTable = () => {
+    //   const initUserName = '',
+    //         initUserId = '';
 
-            ref.push(postData);
-          }
-       });
-    }
+    //   let ref = firebase.database().ref('posts/' + uid).child(databaseKey + '/likes/');
+    //     ref.once("value", snapshot => {
+    //       if(!snapshot.exists()){
+    //         let postData = {
+    //           userName: initUserName,
+    //           userId: initUserId
+    //         };
+
+    //         ref.push(postData);
+    //       }
+    //    });
+    // }
 
     colorChange();
-    appendLikeTable();
-    },[like, firebase, databaseKey, userName, uid]);
+    // appendLikeTable();
+    },[like]);
 
   return(
     <div className="like-icon">
