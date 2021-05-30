@@ -15,20 +15,22 @@ const Likes = (props) => {
   //in likes table and will just add username as people likes it.
 
   /**
-   * COMMENT ME....
+   * When you like a post it the user id of the liker will be added to
+   * the database. Unliking the post will simply just remove the user's
+   * id in the database.
    */
   const likePost = () => {
+    let ref = firebase.database().ref('likes');
+
     setLike(!like);
 
     if(like === true){
-      let ref = firebase.database().ref('likes');
-
       ref.child(databaseKey).set({uid: uid});
     }
 
-    // else{
-    //   //if unliked delete data.
-    // }
+    else{
+      ref.child(databaseKey).remove();
+    }
   };
 
   useEffect(() =>{
