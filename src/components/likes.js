@@ -11,6 +11,9 @@ const Likes = (props) => {
   const [ like, setLike ] = useState(true);
   const [ color, setColor ] = useState("");
 
+  //GENERAL IDEA: every post should automatically have their id
+  //in likes table and will just add username as people likes it.
+
   /**
    * COMMENT ME....
    */
@@ -18,20 +21,14 @@ const Likes = (props) => {
     setLike(!like);
 
     if(like === true){
+      let ref = firebase.database().ref('likes');
 
-      let ref = firebase.database().ref('likes/');
-
-      let likeData = {
-        uid: uid,
-        postid: databaseKey,
-      }
-
-      ref.push(likeData);
+      ref.child(databaseKey).set({uid: uid});
     }
 
-    else{
-      //if unliked delete data.
-    }
+    // else{
+    //   //if unliked delete data.
+    // }
   };
 
   useEffect(() =>{
@@ -42,30 +39,9 @@ const Likes = (props) => {
       like ? setColor("#808080") : setColor("#0000FF");
     }
 
-    // /**
-    //  * The function initializes a like table and appends it to the existing
-    //  * post this will be used later to see which users liked the post.
-    //  */
-    // const appendLikeTable = () => {
-    //   const initUserName = '',
-    //         initUserId = '';
-
-    //   let ref = firebase.database().ref('posts/' + uid).child(databaseKey + '/likes/');
-    //     ref.once("value", snapshot => {
-    //       if(!snapshot.exists()){
-    //         let postData = {
-    //           userName: initUserName,
-    //           userId: initUserId
-    //         };
-
-    //         ref.push(postData);
-    //       }
-    //    });
-    // }
-
     colorChange();
-    // appendLikeTable();
-    },[like]);
+
+  }, [like]);
 
   return(
     <div className="like-icon">

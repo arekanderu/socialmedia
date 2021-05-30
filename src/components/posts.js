@@ -1,4 +1,4 @@
-import React, { useEffect }from 'react';
+import React from 'react';
 import { Container, Card, CardHeader, IconButton, CardContent, CardActions, Divider } from '@material-ui/core';
 import ProfileAvatar from './profileavatar';
 import Popover from './popover';
@@ -17,34 +17,11 @@ const Posts = (props) => {
 
   const fullName = firstName + ' ' + lastName;
 
-  useEffect(() => {
-    /**
-     * Gather all the post in the database of the logged on user and put it on
-     * the array in reverse so it can be viewed from newest to oldest.
-     */
-    const database = () => {
-      firebase.database().ref('likes/').on('value', snapshot => {
-        let arrayPosts = [],
-            arrayKeyValue = [];
-
-        snapshot.forEach(item => {
-          console.log(item.val());
-            // arrayPosts.push(item.val());
-            // arrayKeyValue.push(item.key);
-
-            // setDatabaseKeys(arrayKeyValue.reverse());
-            // setDatabasePost(arrayPosts.reverse());
-        })
-      })
-    };
-    database();
-  }, [])
-
   return(
     <div className="posts">
     <br />
     <Container>
-      {Object.values(databasePosts).map(({content, date, likes}, i) => (
+      {Object.values(databasePosts).map(({content, date}, i) => (
         <Card variant="outlined" style={{marginBottom: 20}} key={i}>
           <CardHeader
             avatar={<ProfileAvatar firstName={firstName} lastName={lastName}/>}

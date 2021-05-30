@@ -154,7 +154,7 @@ const Crud = (props) => {
   useEffect(() => {
     /**
      * Gather all the post in the database of the logged on user and put it on
-     * the array in reverse so it can be viewed from newest to oldest.
+     * the array in reverse so it can be viewed from newest to olddupest.
      */
     const database = () => {
       firebase.database().ref('posts/' + uid).on('value', snapshot => {
@@ -167,6 +167,7 @@ const Crud = (props) => {
 
             setDatabaseKeys(arrayKeyValue.reverse());
             setDatabasePost(arrayPosts.reverse());
+
         })
       })
     };
