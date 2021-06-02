@@ -30,7 +30,7 @@ const Posts = (props) => {
                 <Popover
                   editDialog={editDialog}
                   content={content}
-                  databaseKey={databaseKeys[i]}
+                  postKey={databaseKeys[i]}
                   deleteDialog={deleteDialog}
                 />
               </IconButton>
@@ -41,16 +41,14 @@ const Posts = (props) => {
 
           <CardContent>
             {content}
-
           </CardContent>
 
           <Divider />
             <CardActions>
               <Likes
-                    firebase={firebase}
-                    uid={uid}
-                    databaseKey={databaseKeys[i]}
-                    fullName={fullName}
+                firebase={firebase}
+                uid={uid}
+                databaseKey={databaseKeys[i]}
               />
               <Comments />
             </CardActions>
