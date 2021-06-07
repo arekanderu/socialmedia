@@ -30,7 +30,7 @@ const Posts = (props) => {
                 <Popover
                   editDialog={editDialog}
                   content={content}
-                  postKey={databaseKeys[i]}
+                  databaseKey={databaseKeys[i]}
                   deleteDialog={deleteDialog}
                 />
               </IconButton>

@@ -10,6 +10,8 @@ const Likes = (props) => {
   const [ like, setLike ] = useState(false);
   const [ color, setColor ] = useState("");
 
+  ///AN ERROR WHEN YOU CREATE NEW POST PLEASE INVESTIGATE
+
   /**
    * When you like a post it will set the state to the oposite of the
    * current state. By default starting state is false. Because its
