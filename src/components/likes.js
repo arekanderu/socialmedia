@@ -10,8 +10,6 @@ const Likes = (props) => {
   const [ like, setLike ] = useState(false);
   const [ color, setColor ] = useState("");
 
-  ///AN ERROR WHEN YOU CREATE NEW POST PLEASE INVESTIGATE
-
   /**
    * When you like a post it will set the state to the oposite of the
    * current state. By default starting state is false. Because its
@@ -21,9 +19,15 @@ const Likes = (props) => {
    * the database.
    */
   const likePost = () => {
+    setColor('#3B5998');
     let ref = firebase.database().ref('likes/' + databaseKey);
-    setLike(!like);
-    like ? ref.remove() : ref.child(uid).set(true);
+    if(like === true) {
+      ref.remove()
+    }
+
+    else {
+      ref.child(uid).set(true);
+    }
   };
 
   useEffect(() =>{
@@ -38,7 +42,7 @@ const Likes = (props) => {
      * The function checks the database for post that has been liked and
      * apply set it to the local.
      */
-    const database = () => {
+    const checkLikeStatus = () => {
       firebase.database().ref('likes/' + databaseKey).once("value", snapshot => {
           snapshot.forEach(item => {
             if(item.val() === true){
@@ -48,17 +52,19 @@ const Likes = (props) => {
         })
       }
 
-    database();
+    checkLikeStatus();
     colorChange();
 
   }, [like, databaseKey, firebase, uid]);
 
   return(
-    <div className="like-icon">
-      <IconButton size="small" onClick={() => likePost()}>
-        <ThumbUpIcon style={{fill: color }}/>
-        <small className="like" style={{color: color}}>Like</small>
-      </IconButton>
+    <div>
+      <div className="like-icon">
+        <IconButton size="small" onClick={() => likePost()}>
+          <ThumbUpIcon style={{fill: color }}/>
+          <small className="like" style={{ color: color }}>Like</small>
+        </IconButton>
+      </div>
     </div>
   )
 }

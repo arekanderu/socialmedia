@@ -134,12 +134,14 @@ const Crud = (props) => {
 
 
   /**
-   * Delete a post with the database key.
+   * Delete a post and the like table associated with it using the database key.
    */
   const deletePost = () => {
-    let ref = firebase.database().ref('posts/' + uid);
+    let ref = firebase.database().ref('posts/' + uid),
+        refLikeTable = firebase.database().ref('likes/' + databaseKey);
 
       ref.child(databaseKey).remove();
+      refLikeTable.remove();
   }
 
   /**
@@ -157,18 +159,18 @@ const Crud = (props) => {
      * the array in reverse so it can be viewed from newest to olddupest.
      */
     const database = () => {
-      firebase.database().ref('posts/' + uid).on('value', snapshot => {
+      let ref = firebase.database().ref('posts/' + uid);
+        ref.orderByChild('date').on('value', snapshot => {
         let arrayPosts = [],
             arrayKeyValue = [];
 
         snapshot.forEach(item => {
             arrayPosts.push(item.val());
             arrayKeyValue.push(item.key);
-
-            setDatabaseKeys(arrayKeyValue.reverse());
-            setDatabasePost(arrayPosts.reverse());
-
         })
+
+        setDatabaseKeys(arrayKeyValue.reverse());
+        setDatabasePost(arrayPosts.reverse());
       })
     };
 

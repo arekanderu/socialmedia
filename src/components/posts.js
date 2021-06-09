@@ -44,6 +44,7 @@ const Posts = (props) => {
           </CardContent>
 
           <Divider />
+
             <CardActions>
               <Likes
                 firebase={firebase}

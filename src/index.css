@@ -70,6 +70,13 @@ code {
   margin-right: 30vw;
 }
 
+.like-counter{
+  margin-left: 0vw;
+  margin-top: 10px;
+  /* border: 5px solid red; */
+}
+
 .like, .comment{
   margin-left: 10px;
 }
+
