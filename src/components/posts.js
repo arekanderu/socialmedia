@@ -16,35 +16,36 @@ const Posts = (props) => {
           uid } = props;
 
   const fullName = firstName + ' ' + lastName;
-  const [ colorChange, setColorChange ] = useState("#808080");
-  const [ userId, setUserId ] = useState([]);
   const [ postId, setPostId ] = useState([]);
 
-  //TRY TO ONLY SHOW POST THAT HAS YOUR ACCOUNT EXISTS THEN ITERATE TO YOUR LIKE COMPONENT....
+  /**
+   *
+   * @param databaseKey the post id keys.
+   * @returns filters the table for only id's that exist in your wall.
+   */
+  const filterArray = (databaseKey) => {
+    return postId.filter((item) => item === databaseKey);
+  }
 
   useEffect(() =>{
     /**
-     * The function checks the database for post that has been liked and
-     * apply set it to the local.
+     * The function checks the database for post ids.
      */
-    const checkLikeStatus = () => {
+    const readDatabase = () => {
       firebase.database().ref('likes/').once("value", snapshot => {
-        let arrayPostId = [],
-            arrayUserId = [];
+        let arrayPostId = [];
 
           snapshot.forEach(item => {
-            arrayUserId.push(item.val());
             arrayPostId.push(item.key);
            });
-
-           setUserId(arrayUserId);
            setPostId(arrayPostId);
         })
       }
 
-    checkLikeStatus();
+      readDatabase();
+      filterArray();
 
-  }, [firebase, uid]);
+  }, [firebase, uid, postId]);
 
   return(
     <div className="posts">
@@ -75,15 +76,11 @@ const Posts = (props) => {
           <Divider />
 
             <CardActions>
-
               <Likes
                 firebase={firebase}
                 uid={uid}
                 databaseKey={databaseKeys[i]}
-                color={colorChange}
-                setColorChange={setColorChange}
-                postId={postId}
-                userId={userId}
+                filteredArray={filterArray(databaseKeys[i])}
               />
               <Comments />
             </CardActions>
