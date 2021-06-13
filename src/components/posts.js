@@ -4,6 +4,7 @@ import ProfileAvatar from './profileavatar';
 import Popover from './popover';
 import Likes from './likes';
 import Comments from './comments';
+import LikeCounter from './likecounter';
 
 const Posts = (props) => {
   const { databasePosts,
@@ -43,9 +44,9 @@ const Posts = (props) => {
       }
 
       readDatabase();
-      filterArray();
+      // eslint-disable-next-linefilterArray();
 
-  }, [firebase, uid, postId]);
+  }, [firebase, uid, postId ]);
 
   return(
     <div className="posts">
@@ -71,6 +72,12 @@ const Posts = (props) => {
 
           <CardContent>
             {content}
+          <LikeCounter
+            firebase={firebase}
+            uid={uid}
+            databaseKey={databaseKeys[i]}
+            filteredArray={filterArray(databaseKeys[i])}
+            />
           </CardContent>
 
           <Divider />
