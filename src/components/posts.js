@@ -52,7 +52,8 @@ const Posts = (props) => {
     <div className="posts">
     <br />
     <Container>
-      {Object.values(databasePosts).map(({content, date}, i) => (
+      {databasePosts.length > 0 ?
+      Object.values(databasePosts).map(({content, date}, i) => (
         <Card variant="outlined" style={{marginBottom: 20}} key={i}>
           <CardHeader
             avatar={<ProfileAvatar firstName={firstName} lastName={lastName}/>}
@@ -75,8 +76,8 @@ const Posts = (props) => {
           <LikeCounter
             firebase={firebase}
             uid={uid}
+            postId={postId}
             databaseKey={databaseKeys[i]}
-            filteredArray={filterArray(databaseKeys[i])}
             />
           </CardContent>
 
@@ -94,7 +95,8 @@ const Posts = (props) => {
           <Divider />
           <br />
         </Card>
-      ))}
+      ))
+    : 'No post to display.' }
     </Container>
     </div>
   )

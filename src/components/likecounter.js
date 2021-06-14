@@ -2,44 +2,43 @@ import React, { useState, useEffect }  from 'react';
 import ThumbUpAltTwoToneIcon from '@material-ui/icons/ThumbUpAltTwoTone';
 
 const LikeCounter = (props) => {
-  const { databaseKey,
-          firebase,
+  const { firebase,
           uid,
-          filteredArray } = props;
+          postId,
+          databaseKey } = props;
 
-  const [ isUser, setIsUser ] = useState(false);
+  const [ username, setUserName ] = useState('');
+  const [ isLiked, setIsLiked ] = useState('true');
 
   useEffect(() =>{
     /**
-     *
+     * The function checks the database for post ids.
      */
-    const readDatabase = () => {
-      firebase.database().ref('likes/' + databaseKey).once("value", snapshot => {
-        snapshot.forEach(item => {
-          if(item.key === uid){
-            setIsUser(true);
-          }
-          else{
-            //show username and like counts.
-            //not applicable until future implementations.
-            setIsUser(false);
-          }
-        })
-        })
-      }
 
-      readDatabase();
+  const readDatabase = () => {
+    firebase.database().ref('likes/' + databaseKey).once("value", snapshot => {
+      snapshot.forEach(item => {
+        if(item.key === uid){
+          setUserName('You');
+        }
+        else{
+          setUserName('Something');
+        }
+      })
+    })
+  }
 
-  }, [firebase, uid, databaseKey, filteredArray]);
+  readDatabase();
+
+}, [firebase, uid, postId]);
 
   return(
     <div className="like-counter">
-      { !isUser ? '' :
-      <div>
-        <ThumbUpAltTwoToneIcon fontSize="small" style={{fill: '#3b5998'}} />
-        <small className="like-counter-user">You</small>
-      </div>
-    }
+      {databaseKey}
+         <div>
+          <ThumbUpAltTwoToneIcon fontSize="small" style={{fill: '#3b5998'}} />
+          <small className="like-counter-user">{username}</small>
+        </div>
     </div>
   )
 }
