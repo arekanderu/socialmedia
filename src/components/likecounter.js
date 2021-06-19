@@ -9,6 +9,8 @@ const LikeCounter = (props) => {
 
   const [ username, setUserName ] = useState('');
   const [ isLiked, setIsLiked ] = useState('true');
+  const [ counter, setCounter ] = useState('');
+  const [ array, setArray ] = useState([]);
 
   useEffect(() =>{
     /**
@@ -18,27 +20,31 @@ const LikeCounter = (props) => {
   const readDatabase = () => {
     firebase.database().ref('likes/' + databaseKey).once("value", snapshot => {
       snapshot.forEach(item => {
-        if(item.key === uid){
-          setUserName('You');
+        array.push(item.key);
+
+        if(array.length !== 0){
+          setCounter(1);
         }
         else{
-          setUserName('Something');
+          setCounter(0);
         }
       })
+
     })
   }
 
   readDatabase();
 
-}, [firebase, uid, postId]);
+}, [firebase, uid, postId, array]);
 
   return(
     <div className="like-counter">
-      {databaseKey}
-         <div>
+      {counter === 1 ?
+        <div>
           <ThumbUpAltTwoToneIcon fontSize="small" style={{fill: '#3b5998'}} />
           <small className="like-counter-user">{username}</small>
         </div>
+      : ''}
     </div>
   )
 }
