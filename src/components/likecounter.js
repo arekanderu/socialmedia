@@ -9,7 +9,7 @@ const LikeCounter = (props) => {
 
   const [ username, setUserName ] = useState('');
   const [ isLiked, setIsLiked ] = useState('true');
-  const [ counter, setCounter ] = useState('');
+  const [ counter, setCounter ] = useState(0);
   const [ array, setArray ] = useState([]);
 
   useEffect(() =>{
@@ -19,23 +19,16 @@ const LikeCounter = (props) => {
 
   const readDatabase = () => {
     firebase.database().ref('likes/' + databaseKey).once("value", snapshot => {
-      snapshot.forEach(item => {
-        array.push(item.key);
+      let children = snapshot.numChildren();
 
-        if(array.length !== 0){
-          setCounter(1);
-        }
-        else{
-          setCounter(0);
-        }
-      })
-
+        setCounter(children);
+      console.log(counter);
     })
   }
 
   readDatabase();
 
-}, [firebase, uid, postId, array]);
+}, [firebase, uid, postId]);
 
   return(
     <div className="like-counter">
