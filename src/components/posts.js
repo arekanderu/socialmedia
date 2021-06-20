@@ -78,6 +78,7 @@ const Posts = (props) => {
             uid={uid}
             postId={postId}
             databaseKey={databaseKeys[i]}
+            fullName={fullName}
             />
           </CardContent>
 
