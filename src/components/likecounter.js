@@ -38,7 +38,7 @@ const LikeCounter = (props) => {
 
   readDatabase();
 
-}, [firebase, uid, postId]);
+}, [firebase, uid, postId, databaseKey, fullName]);
 
   return(
     <div className="like-counter">

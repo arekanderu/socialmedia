@@ -5,6 +5,7 @@ import Popover from './popover';
 import Likes from './likes';
 import Comments from './comments';
 import LikeCounter from './likecounter';
+import CommentBar from './commentbar';
 
 const Posts = (props) => {
   const { databasePosts,
@@ -94,7 +95,9 @@ const Posts = (props) => {
               <Comments />
             </CardActions>
           <Divider />
-          <br />
+
+          <CommentBar firstName={firstName} lastName={lastName}/>
+
         </Card>
       ))
     : 'No post to display.' }
