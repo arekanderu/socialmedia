@@ -19,6 +19,7 @@ const Posts = (props) => {
 
   const fullName = firstName + ' ' + lastName;
   const [ postId, setPostId ] = useState([]);
+  const [ autoFocus, setAutoFocus ] = useState(true);
 
   /**
    *
@@ -92,11 +93,14 @@ const Posts = (props) => {
                 databaseKey={databaseKeys[i]}
                 filteredArray={filterArray(databaseKeys[i])}
               />
-              <Comments />
+              <Comments focus={autoFocus} setAutoFocus={setAutoFocus}/>
             </CardActions>
           <Divider />
 
-          <CommentBar firstName={firstName} lastName={lastName}/>
+          <CommentBar
+            firstName={firstName}
+            lastName={lastName}
+            focus={autoFocus}/>
 
         </Card>
       ))

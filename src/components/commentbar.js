@@ -1,14 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ProfileAvatar from './profileavatar';
 import { TextField, Grid  } from '@material-ui/core';
 
 const Comments = (props) => {
   const { firstName,
-         lastName  } = props;
+          lastName,
+          focus  } = props;
+
+  const [ autoFocus, setAutoFocus ] = useState(true);
+
   return(
     <div className="comment-bar">
       <Grid container spacing={1} alignItems="flex-end">
-          <Grid item xs={0} md={0}>
+          <Grid item>
             <div className="small-avatar">
               <ProfileAvatar
                 firstName={firstName}
@@ -17,9 +21,10 @@ const Comments = (props) => {
               />
             </div>
           </Grid>
-          <Grid item xs={11} md={11}>
+          <Grid item xs={10} md={11}>
           <TextField
             fullWidth
+            autoFocus={focus}
           />
           </Grid>
       </Grid>
