@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { } from 'react';
 import ProfileAvatar from './profileavatar';
 import { TextField, Grid  } from '@material-ui/core';
 
@@ -6,22 +6,6 @@ const Comments = (props) => {
   const { firstName,
           lastName,
           autoFocus  } = props;
-
-  const focus = false;
-
-  useEffect(() =>{
-    /**
-     *
-     */
-    const test = () => {
-     if(autoFocus === true){
-      console.log('hi')
-     }
-    }
-
-      test();
-
-  }, []);
 
   return(
     <div className="comment-bar">
@@ -38,7 +22,7 @@ const Comments = (props) => {
           <Grid item xs={10} md={11}>
           <TextField
             fullWidth
-            autoFocus={autoFocus}
+            autoFocus
           />
           </Grid>
       </Grid>
