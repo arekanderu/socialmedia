@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Card, CardHeader, IconButton, CardContent, CardActions, Divider } from '@material-ui/core';
+import { Container, Card, CardHeader, IconButton, CardContent, CardActions, Divider, Collapse } from '@material-ui/core';
 import ProfileAvatar from './profileavatar';
 import Popover from './popover';
 import Likes from './likes';
@@ -19,7 +19,7 @@ const Posts = (props) => {
 
   const fullName = firstName + ' ' + lastName;
   const [ postId, setPostId ] = useState([]);
-  const [ autoFocus, setAutoFocus ] = useState(false);
+  const [ open, setOpen ] = useState('');
 
   /**
    *
@@ -48,7 +48,7 @@ const Posts = (props) => {
       readDatabase();
       // eslint-disable-next-linefilterArray();
 
-  }, [firebase, uid, postId ]);
+  }, [ firebase, uid, postId ]);
 
   return(
     <div className="posts">
@@ -93,15 +93,16 @@ const Posts = (props) => {
                 databaseKey={databaseKeys[i]}
                 filteredArray={filterArray(databaseKeys[i])}
               />
-              <Comments/>
+              <Comments open={open} setOpen={setOpen} index={i}/>
             </CardActions>
           <Divider/>
 
-          <CommentBar
-            firstName={firstName}
-            lastName={lastName}
-            autoFocus={autoFocus}
-          />
+          <Collapse in={open === i}>
+            <CommentBar
+              firstName={firstName}
+              lastName={lastName}
+            />
+          </Collapse>
 
         </Card>
       ))
