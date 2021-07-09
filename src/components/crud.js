@@ -156,7 +156,7 @@ const Crud = (props) => {
   useEffect(() => {
     /**
      * Gather all the post in the database of the logged on user and put it on
-     * the array in reverse so it can be viewed from newest to olddupest.
+     * the array in reverse so it can be viewed from newest to olddest.
      */
     const database = () => {
       let ref = firebase.database().ref('posts/' + uid);
@@ -189,7 +189,7 @@ const Crud = (props) => {
      */
     const textHasChanged = () => {
       textValue !== temp ? setTextChanged(true) : setTextChanged(false);
-    }
+    };
 
     database();
     clearTextField();

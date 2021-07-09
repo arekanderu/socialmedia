@@ -6,6 +6,7 @@ import Likes from './likes';
 import Comments from './comments';
 import LikeCounter from './likecounter';
 import CommentBar from './commentbar';
+import CommentWall from './commentwall';
 
 const Posts = (props) => {
   const { databasePosts,
@@ -32,9 +33,9 @@ const Posts = (props) => {
 
   useEffect(() =>{
     /**
-     * The function checks the database for post ids.
+     * The function checks the database for post ids for likes.
      */
-    const readDatabase = () => {
+    const readLikeDatabase = () => {
       firebase.database().ref('likes/').once("value", snapshot => {
         let arrayPostId = [];
 
@@ -45,7 +46,7 @@ const Posts = (props) => {
         })
       }
 
-      readDatabase();
+      readLikeDatabase();
       // eslint-disable-next-linefilterArray();
 
   }, [ firebase, uid, postId ]);
@@ -101,9 +102,14 @@ const Posts = (props) => {
             <CommentBar
               firstName={firstName}
               lastName={lastName}
+              firebase={firebase}
+              databaseKey={databaseKeys[i]}
             />
           </Collapse>
-
+          <CommentWall
+            firebase={firebase}
+            databaseKey={databaseKeys[i]}
+          />
         </Card>
       ))
     : 'No post to display.' }
