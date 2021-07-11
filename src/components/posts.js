@@ -76,6 +76,9 @@ const Posts = (props) => {
 
           <CardContent>
             {content}
+
+          <Divider />
+
           <LikeCounter
             firebase={firebase}
             uid={uid}
@@ -98,6 +101,12 @@ const Posts = (props) => {
             </CardActions>
           <Divider/>
 
+          <CommentWall
+            firebase={firebase}
+            databaseKey={databaseKeys[i]}
+            firstName={firstName}
+            lastName={lastName}
+          />
           <Collapse in={open === i}>
             <CommentBar
               firstName={firstName}
@@ -106,10 +115,7 @@ const Posts = (props) => {
               databaseKey={databaseKeys[i]}
             />
           </Collapse>
-          <CommentWall
-            firebase={firebase}
-            databaseKey={databaseKeys[i]}
-          />
+
         </Card>
       ))
     : 'No post to display.' }

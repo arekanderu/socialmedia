@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from 'react';
+import ProfileAvatar from './profileavatar';
 
 const CommentWall = (props) => {
   const { firebase,
-          databaseKey } = props;
+          databaseKey,
+          firstName,
+          lastName } = props;
 
   const [ databasePosts, setDatabasePost ] = useState([]);
   const [ databaseKeys, setDatabaseKeys ] = useState([]);
 
   useEffect(() => {
     /**
-     * EDIT ME.
+     * Read the comment in database and push it to the state.
      */
     const database = () => {
       let ref = firebase.database().ref('comments/' + databaseKey);
@@ -34,8 +37,12 @@ const CommentWall = (props) => {
   <div className="comment-wall">
     {Object.values(databasePosts).map(({content, date}, i) => (
       <div>
+        <ProfileAvatar
+          firstName={firstName}
+          lastName={lastName}
+          size='small'
+        />
       {content}
-      {date}
       </div>
     ))}
   </div>
