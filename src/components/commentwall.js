@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ProfileAvatar from './profileavatar';
+import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 
 const CommentWall = (props) => {
   const { firebase,
@@ -8,7 +9,6 @@ const CommentWall = (props) => {
           lastName } = props;
 
   const [ databasePosts, setDatabasePost ] = useState([]);
-  const [ databaseKeys, setDatabaseKeys ] = useState([]);
 
   useEffect(() => {
     /**
@@ -17,15 +17,12 @@ const CommentWall = (props) => {
     const database = () => {
       let ref = firebase.database().ref('comments/' + databaseKey);
         ref.orderByChild('date').on('value', snapshot => {
-        let arrayPosts = [],
-            arrayKeyValue = [];
+
+          let arrayPosts = [];
 
         snapshot.forEach(item => {
             arrayPosts.push(item.val());
-            arrayKeyValue.push(item.key);
         })
-
-        setDatabaseKeys(arrayKeyValue.reverse());
         setDatabasePost(arrayPosts.reverse());
       })
     }
@@ -36,14 +33,33 @@ const CommentWall = (props) => {
   return(
   <div className="comment-wall">
     {Object.values(databasePosts).map(({content, date}, i) => (
-      <div>
-        <ProfileAvatar
-          firstName={firstName}
-          lastName={lastName}
-          size='small'
-        />
-      {content}
-      </div>
+      <ul>
+        <li>
+
+          <div className="comment-avatar">
+            <ProfileAvatar
+              firstName={firstName}
+              lastName={lastName}
+              size='small'
+            />
+          </div>
+
+          <div className="comment-wall-chatbox">
+            <small className="comment-first-last-name">
+              <a href="/#">{firstName} {lastName}</a>
+            </small>
+
+            <div className="comment-content">
+              <small>{content}</small>
+            </div>
+          </div>
+
+            <div className="comment-more">
+              <MoreHorizIcon />
+            </div>
+        </li>
+      </ul>
+
     ))}
   </div>
   );

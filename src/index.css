@@ -97,3 +97,32 @@ code {
   margin-left: 10px;
   margin-bottom: 10px;
 }
+
+.comment-wall{
+  margin-top: 20px;
+  margin-left: -20px;
+
+}
+
+.comment-wall ul{
+  list-style-type: none;
+}
+
+.comment-wall-chatbox{
+  display: inline-block;
+  border: 1px solid #F0F2F5;
+  border-radius: 25px;
+  background-color: #F0F2F5;
+  margin-left: 40px;
+  margin-top: -30px;
+  margin-bottom: 10px;
+  padding-left: 10px;
+  padding-bottom: 15px;
+  padding-right: 10px;
+}
+
+.comment-more{
+  margin-top: -50px;
+  margin-left: 200px;
+  margin-bottom: 25px;
+}

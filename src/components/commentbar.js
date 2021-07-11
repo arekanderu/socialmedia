@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import ProfileAvatar from './profileavatar';
 import { TextField, Grid } from '@material-ui/core';
 
@@ -9,8 +9,6 @@ const Comments = (props) => {
           databaseKey } = props;
 
   const [ textValue, setTextValue ] = useState('');
-  const [ databasePosts, setDatabasePost ] = useState([]);
-  const [ databaseKeys, setDatabaseKeys ] = useState([]);
 
   /**
    *
@@ -44,28 +42,6 @@ const Comments = (props) => {
     setTextValue('');
   };
 
-  useEffect(() => {
-    /**
-     * EDIT ME.
-     */
-    const database = () => {
-      let ref = firebase.database().ref('comments/' + databaseKey);
-        ref.orderByChild('date').on('value', snapshot => {
-        let arrayPosts = [],
-            arrayKeyValue = [];
-
-        snapshot.forEach(item => {
-            arrayPosts.push(item.val());
-            arrayKeyValue.push(item.key);
-        })
-
-        setDatabaseKeys(arrayKeyValue.reverse());
-        setDatabasePost(arrayPosts.reverse());
-      })
-    }
-    database();
-  }, [firebase, databaseKey])
-
   return(
     <div className="comment-bar">
         <Grid container spacing={1} alignItems="flex-end">
@@ -85,6 +61,7 @@ const Comments = (props) => {
               onKeyDown={(e) => handleKeyDown(e)}
               value={textValue}
               onChange={(e) => setTextValue(e.target.value)}
+              placeholder="Write a comment..."
             />
             </Grid>
         </Grid>
