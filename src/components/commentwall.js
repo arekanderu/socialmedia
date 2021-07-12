@@ -9,33 +9,68 @@ const CommentWall = (props) => {
           lastName } = props;
 
   const [ databasePosts, setDatabasePost ] = useState([]);
+  const [ commentCounter, setCommentCounter ] = useState(0);
+  const [ message, setMessage ] = useState('View more comments');
+
+  /**
+   * STRUGGLES bug 1: view more comments should be hidden when you press it.
+   *           bug 2: hovering css is not following the width of comment bubble.
+   *           bug 3: show more comment only shows when you are refreshing the data. (Tip: listen to new comment value to update.)
+   */
+
+  const showMoreComment = () =>{
+    setMessage('');
+    firebase.database().ref('comments/' + databaseKey).once("value", snapshot => {
+      let arrayPosts = [];
+
+      snapshot.forEach(item => {
+        arrayPosts.push(item.val());
+      })
+
+      setDatabasePost(arrayPosts);
+    });
+  }
 
   useEffect(() => {
+    let ref = firebase.database().ref('comments/' + databaseKey);
     /**
      * Read the comment in database and push it to the state.
+     * Query is only limit to 1 which is the very previous
+     * comment.
      */
-    const database = () => {
-      let ref = firebase.database().ref('comments/' + databaseKey);
-        ref.orderByChild('date').on('value', snapshot => {
+    const singleComment = () => {
+        ref.orderByChild('date').limitToLast(1).on('value', snapshot => {
 
           let arrayPosts = [];
 
         snapshot.forEach(item => {
             arrayPosts.push(item.val());
         })
-        setDatabasePost(arrayPosts.reverse());
+        setDatabasePost(arrayPosts);
       })
     }
-    database();
+
+    /**
+     * Check the database how many comments one post has.
+     */
+    const checkForMoreComments = () => {
+      ref.once("value", snapshot => {
+        let children = snapshot.numChildren();
+        setCommentCounter(children);
+         });
+    }
+
+    singleComment();
+    checkForMoreComments();
+
   }, [firebase, databaseKey])
 
 
   return(
   <div className="comment-wall">
-    {Object.values(databasePosts).map(({content, date}, i) => (
-      <ul>
-        <li>
-
+    <ul>
+    {Object.values(databasePosts).map(({content}, i) => (
+        <li key={i}>
           <div className="comment-avatar">
             <ProfileAvatar
               firstName={firstName}
@@ -57,10 +92,12 @@ const CommentWall = (props) => {
             <div className="comment-more">
               <MoreHorizIcon />
             </div>
-        </li>
-      </ul>
+            <br / >
+            {commentCounter > 1 ? <u className="comment-view-more-comment" onClick={showMoreComment}>{message}</u> : '' }
 
+        </li>
     ))}
+    </ul>
   </div>
   );
 }

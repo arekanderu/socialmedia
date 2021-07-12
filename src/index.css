@@ -122,7 +122,26 @@ code {
 }
 
 .comment-more{
-  margin-top: -50px;
-  margin-left: 200px;
-  margin-bottom: 25px;
+  margin-top: -60px;
+  margin-left: 15em;
+  display: none;
+  padding: 5px;
+}
+
+.comment-wall-chatbox:hover + .comment-more{
+  display: block;
+}
+
+.comment-more:hover{
+  display: block
+}
+
+.comment-view-more-comment{
+  text-decoration: none;
+  font-size: 14px;
+  color: #65676B;
+}
+
+.comment-view-more-comment:hover{
+  text-decoration: underline;
 }
