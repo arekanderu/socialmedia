@@ -134,14 +134,17 @@ const Crud = (props) => {
 
 
   /**
-   * Delete a post and the like table associated with it using the database key.
+   * Delete a post, the like table, and the comment section table associated
+   * with the database key.
    */
   const deletePost = () => {
     let ref = firebase.database().ref('posts/' + uid),
-        refLikeTable = firebase.database().ref('likes/' + databaseKey);
+        refLikeTable = firebase.database().ref('likes/' + databaseKey),
+        refCommentTable = firebase.database().ref('comments/' + databaseKey);
 
       ref.child(databaseKey).remove();
       refLikeTable.remove();
+      refCommentTable.remove();
   }
 
   /**

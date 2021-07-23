@@ -106,6 +106,7 @@ const Posts = (props) => {
             databaseKey={databaseKeys[i]}
             firstName={firstName}
             lastName={lastName}
+            postId={postId}
           />
           <Collapse in={open === i}>
             <CommentBar

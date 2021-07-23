@@ -119,13 +119,15 @@ code {
   padding-left: 10px;
   padding-bottom: 15px;
   padding-right: 10px;
+  position: relative;
 }
 
 .comment-more{
   margin-top: -60px;
-  margin-left: 15em;
+  left: 27%;
   display: none;
   padding: 5px;
+  position: absolute;
 }
 
 .comment-wall-chatbox:hover + .comment-more{

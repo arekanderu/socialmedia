@@ -6,15 +6,16 @@ const CommentWall = (props) => {
   const { firebase,
           databaseKey,
           firstName,
-          lastName } = props;
+          lastName,
+          postId } = props;
 
   const [ databasePosts, setDatabasePost ] = useState([]);
   const [ commentCounter, setCommentCounter ] = useState(0);
   const [ message, setMessage ] = useState('View more comments');
 
   /**
-   * STRUGGLES bug 1: view more comments should be hidden when you press it.
-   *           bug 2: hovering css is not following the width of comment bubble.
+   * STRUGGLES
+   * bug 2: hovering css is not following the width of comment bubble.
    *           bug 3: show more comment only shows when you are refreshing the data. (Tip: listen to new comment value to update.)
    */
 
@@ -63,7 +64,7 @@ const CommentWall = (props) => {
     singleComment();
     checkForMoreComments();
 
-  }, [firebase, databaseKey])
+  }, [firebase, databaseKey, postId])
 
 
   return(
