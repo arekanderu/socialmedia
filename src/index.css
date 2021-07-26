@@ -124,19 +124,20 @@ code {
 }
 
 .comment-more{
-  margin-top: -10px;
-  display:none;
+  margin-top: -20px;
+  display: inline-block;
   padding: 5px;
   position: absolute;
+  visibility: hidden;
 }
 
 
 .comment-wall-chatbox:hover + .comment-more{
-  display: inline-block;
+  visibility: visible;
 }
 
 .comment-more:hover{
-  display: inline-block;
+  visibility: visible;
 }
 
 .comment-view-more-comment{

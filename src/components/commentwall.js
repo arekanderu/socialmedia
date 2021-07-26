@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ProfileAvatar from './profileavatar';
-import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
+import PopoverComment from './popovercomment';
+import { IconButton } from '@material-ui/core';
 
 const CommentWall = (props) => {
   const { firebase,
@@ -91,9 +92,13 @@ const CommentWall = (props) => {
           </div>
 
             <div className="comment-more">
-              <MoreHorizIcon />
+              <IconButton aria-label="settings">
+                <PopoverComment
+                  databaseKey={databaseKey}
+                />
+              </IconButton>
             </div>
-            <br / >
+            <br />
             {commentCounter > 1 ? <u className="comment-view-more-comment" onClick={showMoreComment}>{message}</u> : '' }
 
         </li>
