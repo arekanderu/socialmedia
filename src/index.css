@@ -120,22 +120,23 @@ code {
   padding-bottom: 15px;
   padding-right: 10px;
   position: relative;
+  max-width: 200px;
 }
 
 .comment-more{
-  margin-top: -60px;
-  left: 27%;
-  display: none;
+  margin-top: -10px;
+  display:none;
   padding: 5px;
   position: absolute;
 }
 
+
 .comment-wall-chatbox:hover + .comment-more{
-  display: block;
+  display: inline-block;
 }
 
 .comment-more:hover{
-  display: block
+  display: inline-block;
 }
 
 .comment-view-more-comment{
