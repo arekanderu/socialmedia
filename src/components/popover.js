@@ -1,12 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Popper from '@material-ui/core/Popover';
 import PopupState, { bindTrigger, bindPopover } from 'material-ui-popup-state';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import { Box, Button } from '@material-ui/core';
-import EditIcon from '@material-ui/icons/Edit';
-import DeleteIcon from '@material-ui/icons/Delete';
+import DialogBox from './dialogbox';
+
+
 
 export default function PopoverPopupState(props) {
+
+  const [ openDialog, setOpenDialog ] = useState(false);
+
   /**
    *
    * @param content The text value of the object intending to be edited.
@@ -15,45 +19,73 @@ export default function PopoverPopupState(props) {
    *
    * When you click on the Edit button it will pass the data to the function for later use then it will close the popup.
    */
-  const handleOnClick = (action, content, databaseKey, popupState) =>{
-    if(action === 'edit'){
-      props.editDialog(content, databaseKey);
+  const handleOnClick = (functionality, action, popupState, postId, commentId) =>{
+    if(functionality === 'post'){
+      console.log(postId);
+      if(action === 'edit'){
+        props.editDialog(props.content, postId);
+      }
+
+      else{
+        props.deleteDialog(postId);
+      }
     }
 
-    else{
-      props.deleteDialog(databaseKey);
+
+    if(functionality === 'comment'){
+      if(action === 'edit'){
+        console.log('edit');
+      }
+
+      else{
+        setOpenDialog(true);
+      }
     }
+
     popupState.close();
   };
 
+  const deleteComment = () =>{
+    let ref = props.firebase.database().ref('comments/' + props.postId);
+
+    ref.child(props.commentId).remove();
+  };
+
   return (
-    <PopupState variant="popper">
+    <PopupState variant="popper" >
       {(popupState) => (
         <div>
-          <MoreVertIcon {...bindTrigger(popupState)}/>
+          <MoreHorizIcon {...bindTrigger(popupState)}/>
           <Popper
             {...bindPopover(popupState)}
             anchorOrigin={{
-              vertical: 'center',
-              horizontal: 'left',
+              vertical: 'bottom',
+              horizontal: 'center',
             }}
             transformOrigin={{
-              vertical: 'center',
-              horizontal: 'left',
+              vertical: 'bottom',
+              horizontal: 'center',
             }}
           >
             <Box p={2}>
-              <Button size="small" onClick={() => handleOnClick('edit', props.content, props.databaseKey, popupState)}>
-                <EditIcon/>&nbsp;
-                Edit post
+              <Button size="small" onClick={() => handleOnClick(props.functionality, 'edit', popupState, props.postId, props.commentId)}>
+                {props.firstBox}
               </Button>
-              <hr />
-              <Button size="small" onClick={() => handleOnClick('delete', '', props.databaseKey, popupState)}>
-                <DeleteIcon/>&nbsp;
-                Move to trash
+              <br />
+              <Button size="small" onClick={() => handleOnClick(props.functionality, 'delete', popupState, props.postId, props.commentId)}>
+                {props.secondBox}
               </Button>
             </Box>
           </Popper>
+          <DialogBox
+            open={openDialog}
+            title={'Delete Comment'}
+            message={'Are you sure you want to delete this comment? '}
+            action={'Cancel'}
+            secondaryAction={'Delete'}
+            deleteComment={deleteComment}
+            openDialog={setOpenDialog}
+          />
         </div>
       )}
     </PopupState>

@@ -17,7 +17,8 @@ const DialogBox = (props) => {
           deleteComment } = props;
 
   /**
-   * Close the Dialog Box.
+   * Close the Dialog Box and change the text value of the main text box to
+   * nothing.
    */
   const handleClose = () => {
     if(isDelete === ' Delete'){
@@ -27,19 +28,21 @@ const DialogBox = (props) => {
   }
 
   /**
-   * If you are trying to delete a post then it will remove that post.
-   * It will then close all dialog boxes.
+   * Delete a post and close main dialog box.
+   * else it will delete a comment on a post.
+   * It will then close the propmpt dialog box.
    */
   const handleOnClick = () => {
     if(isDelete === 'Delete'){
       deletePost();
-      openDialog(false);
       mainDialog(false);
     }
 
     else{
       deleteComment();
     }
+
+    openDialog(false);
   }
 
   return(

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ProfileAvatar from './profileavatar';
-import PopoverComment from './popovercomment';
+import Popover from './popover';
 import { IconButton, TextField } from '@material-ui/core';
 
 const CommentWall = (props) => {
@@ -119,10 +119,13 @@ const CommentWall = (props) => {
 
             <div className="comment-more">
               <IconButton aria-label="settings">
-                <PopoverComment
+                <Popover
                   postId={databaseKey}
                   commentId={commentOnPostId[i]}
                   firebase={firebase}
+                  firstBox={'Edit'}
+                  secondBox={'Delete'}
+                  functionality={'comment'}
                 />
               </IconButton>
             </div>

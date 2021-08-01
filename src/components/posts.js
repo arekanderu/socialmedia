@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Card, CardHeader, IconButton, CardContent, CardActions, Divider, Collapse } from '@material-ui/core';
 import ProfileAvatar from './profileavatar';
-import Popover from './popover';
 import Likes from './likes';
 import Comments from './comments';
 import LikeCounter from './likecounter';
 import CommentBar from './commentbar';
 import CommentWall from './commentwall';
+import Popover from './popover';
 
 const Posts = (props) => {
   const { databasePosts,
@@ -63,10 +63,13 @@ const Posts = (props) => {
             action={
               <IconButton aria-label="settings">
                 <Popover
+                  firstBox={'Edit Post'}
+                  secondBox={'Move to trash'}
                   editDialog={editDialog}
                   content={content}
-                  databaseKey={databaseKeys[i]}
+                  postId={databaseKeys[i]}
                   deleteDialog={deleteDialog}
+                  functionality={'post'}
                 />
               </IconButton>
             }
