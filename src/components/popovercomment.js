@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Popper from '@material-ui/core/Popover';
 import PopupState, { bindTrigger, bindPopover } from 'material-ui-popup-state';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import { Box, Button } from '@material-ui/core';
+import DialogBox from './dialogbox';
+
+
 
 export default function PopoverPopupState(props) {
+
+  const [ openDialog, setOpenDialog ] = useState(false);
+
   /**
    *
    * @param content The text value of the object intending to be edited.
@@ -19,13 +25,16 @@ export default function PopoverPopupState(props) {
     }
 
     else{
-      console.log(postId);
-      console.log(commentId);
-      // let ref = props.firebase.database().ref('comments/' + postId);
-
-      // ref.child(commentId).remove();
+      setOpenDialog(true);
     }
+
     popupState.close();
+  };
+
+  const deleteComment = () =>{
+    let ref = props.firebase.database().ref('comments/' + props.postId);
+
+    ref.child(props.commentId).remove();
   };
 
   return (
@@ -54,6 +63,15 @@ export default function PopoverPopupState(props) {
               </Button>
             </Box>
           </Popper>
+          <DialogBox
+            open={openDialog}
+            title={'Delete Comment'}
+            message={'Are you sure you want to delete this comment? '}
+            action={'Cancel'}
+            secondaryAction={'Delete'}
+            deleteComment={deleteComment}
+            openDialog={setOpenDialog}
+          />
         </div>
       )}
     </PopupState>

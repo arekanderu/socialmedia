@@ -13,14 +13,17 @@ const DialogBox = (props) => {
           textValue,
           temp,
           isDelete,
-          deletePost } = props;
+          deletePost,
+          deleteComment } = props;
 
   /**
    * Close the Dialog Box.
    */
   const handleClose = () => {
+    if(isDelete === ' Delete'){
+      textValue(temp);
+    }
     openDialog(false);
-    textValue(temp);
   }
 
   /**
@@ -30,9 +33,13 @@ const DialogBox = (props) => {
   const handleOnClick = () => {
     if(isDelete === 'Delete'){
       deletePost();
-    }
       openDialog(false);
       mainDialog(false);
+    }
+
+    else{
+      deleteComment();
+    }
   }
 
   return(

@@ -24,15 +24,6 @@ const CommentWall = (props) => {
   const showMoreComment = () =>{
     setViewMore(true);
     setMessage('');
-    firebase.database().ref('comments/' + databaseKey).once("value", snapshot => {
-      let arrayPosts = [];
-
-      snapshot.forEach(item => {
-        arrayPosts.push(item.val());
-      })
-
-      setCommentOnPost(arrayPosts);
-    });
   }
 
   useEffect(() => {
@@ -41,17 +32,34 @@ const CommentWall = (props) => {
      * Read the comment in database and push it to the state.
      * Query is only limit to 1 which is the very previous
      * comment.
+     *
+     * UPDATE ME....
      */
-    const singleComment = () => {
-        ref.limitToLast(1).on('value', snapshot => {
+    const commentView = () => {
+      let arrayPosts = [];
 
-          let arrayPosts = [];
+      if(!viewMore) {
+        ref.limitToLast(1).once('value', snapshot => {
 
-        snapshot.forEach(item => {
+          snapshot.forEach(item => {
             arrayPosts.push(item.val());
+          })
+
+          setCommentOnPost(arrayPosts);
         })
-        setCommentOnPost(arrayPosts);
-      })
+      }
+
+      else {
+        ref.once('value', snapshot => {
+
+          snapshot.forEach(item => {
+            arrayPosts.push(item.val());
+          })
+
+          setCommentOnPost(arrayPosts);
+        })
+      }
+
     }
 
     /**
@@ -79,11 +87,11 @@ const CommentWall = (props) => {
       });
     }
 
-    singleComment();
+    commentView();
     checkForMoreComments();
     retriveKeys();
 
-  }, [firebase, databaseKey, postId])
+  }, [firebase, databaseKey, postId, viewMore])
 
 
   return(
