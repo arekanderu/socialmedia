@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ProfileAvatar from './profileavatar';
 import PopoverComment from './popovercomment';
-import { IconButton } from '@material-ui/core';
+import { IconButton, TextField } from '@material-ui/core';
 
 const CommentWall = (props) => {
   const { firebase,
@@ -10,17 +10,19 @@ const CommentWall = (props) => {
           lastName,
           postId } = props;
 
-  const [ databasePosts, setDatabasePost ] = useState([]);
+  const [ commentOnPost, setCommentOnPost ] = useState([]);
+  const [ commentOnPostId, setCommentOnPostId ] = useState([]);
   const [ commentCounter, setCommentCounter ] = useState(0);
   const [ message, setMessage ] = useState('View more comments');
+  const [ viewMore, setViewMore ] = useState(false);
 
   /**
-   * STRUGGLES
-   * bug 2: hovering css is not following the width of comment bubble.
-   *           bug 3: show more comment only shows when you are refreshing the data. (Tip: listen to new comment value to update.)
+   * UPDATE ME!!!
+   *
    */
 
   const showMoreComment = () =>{
+    setViewMore(true);
     setMessage('');
     firebase.database().ref('comments/' + databaseKey).once("value", snapshot => {
       let arrayPosts = [];
@@ -29,7 +31,7 @@ const CommentWall = (props) => {
         arrayPosts.push(item.val());
       })
 
-      setDatabasePost(arrayPosts);
+      setCommentOnPost(arrayPosts);
     });
   }
 
@@ -41,14 +43,14 @@ const CommentWall = (props) => {
      * comment.
      */
     const singleComment = () => {
-        ref.orderByChild('date').limitToLast(1).on('value', snapshot => {
+        ref.limitToLast(1).on('value', snapshot => {
 
           let arrayPosts = [];
 
         snapshot.forEach(item => {
             arrayPosts.push(item.val());
         })
-        setDatabasePost(arrayPosts);
+        setCommentOnPost(arrayPosts);
       })
     }
 
@@ -62,8 +64,24 @@ const CommentWall = (props) => {
          });
     }
 
+    /**
+     * UPDATE ME
+     */
+    const retriveKeys = () => {
+      firebase.database().ref('comments/' + databaseKey).once("value", snapshot => {
+        let arrayKeys = [];
+
+        snapshot.forEach(item => {
+          arrayKeys.push(item.key);
+        })
+
+        setCommentOnPostId(arrayKeys);
+      });
+    }
+
     singleComment();
     checkForMoreComments();
+    retriveKeys();
 
   }, [firebase, databaseKey, postId])
 
@@ -71,7 +89,7 @@ const CommentWall = (props) => {
   return(
   <div className="comment-wall">
     <ul>
-    {Object.values(databasePosts).map(({content}, i) => (
+    {Object.values(commentOnPost).map(({content}, i) => (
         <li key={i}>
           <div className="comment-avatar">
             <ProfileAvatar
@@ -94,7 +112,9 @@ const CommentWall = (props) => {
             <div className="comment-more">
               <IconButton aria-label="settings">
                 <PopoverComment
-                  databaseKey={databaseKey}
+                  postId={databaseKey}
+                  commentId={commentOnPostId[i]}
+                  firebase={firebase}
                 />
               </IconButton>
             </div>

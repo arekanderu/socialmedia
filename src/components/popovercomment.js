@@ -13,13 +13,17 @@ export default function PopoverPopupState(props) {
    *
    * When you click on the Edit button it will pass the data to the function for later use then it will close the popup.
    */
-  const handleOnClick = (action, popupState, databaseKey) =>{
+  const handleOnClick = (action, popupState, postId, commentId) =>{
     if(action === 'edit'){
-
+      console.log('edit');
     }
 
     else{
+      console.log(postId);
+      console.log(commentId);
+      // let ref = props.firebase.database().ref('comments/' + postId);
 
+      // ref.child(commentId).remove();
     }
     popupState.close();
   };
@@ -41,11 +45,11 @@ export default function PopoverPopupState(props) {
             }}
           >
             <Box p={2}>
-              <Button size="small" onClick={() => handleOnClick('edit', popupState, props.databaseKey)}>
+              <Button size="small" onClick={() => handleOnClick('edit', popupState, props.postId, props.commentId)}>
                 Edit
               </Button>
               <br />
-              <Button size="small" onClick={() => handleOnClick('delete', popupState, props.databaseKey)}>
+              <Button size="small" onClick={() => handleOnClick('delete', popupState, props.postId, props.commentId)}>
                 Delete
               </Button>
             </Box>
