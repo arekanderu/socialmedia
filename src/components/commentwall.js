@@ -1,7 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import ProfileAvatar from './profileavatar';
 import Popover from './popover';
-import { IconButton, TextField } from '@material-ui/core';
+import { IconButton, TextField, makeStyles } from '@material-ui/core';
+
+const useStyles = makeStyles(() => ({
+  textField: {
+    width: '60vw',
+    fontSize: '15px',
+    color: 'red',
+  },
+}));
 
 const CommentWall = (props) => {
   const { firebase,
@@ -15,15 +23,23 @@ const CommentWall = (props) => {
   const [ commentCounter, setCommentCounter ] = useState(0);
   const [ message, setMessage ] = useState('View more comments');
   const [ viewMore, setViewMore ] = useState(false);
+  const [ textFieldOn, setTextFieldOn ] = useState(true);
+  const classes = useStyles();
 
   /**
    * UPDATE ME!!!
    *
    */
-
   const showMoreComment = () =>{
     setViewMore(true);
     setMessage('');
+  }
+
+  /**
+   *
+   */
+  const triggerEditComment = () => {
+    setTextFieldOn(true);
   }
 
   useEffect(() => {
@@ -113,7 +129,19 @@ const CommentWall = (props) => {
             </small>
 
             <div className="comment-content">
-              <small>{content}</small>
+              {textFieldOn ?
+                <TextField
+                  autoFocus
+                  value={content}
+                  type="text"
+                  // onChange={(e) => setTextValue(e.target.value)}
+                  autoComplete="off"
+                  InputProps={{
+                    className: classes.textField
+                  }}
+                />
+                  :
+                <small>{content}</small> }
             </div>
           </div>
 
