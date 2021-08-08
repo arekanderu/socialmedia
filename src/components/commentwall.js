@@ -5,9 +5,8 @@ import { IconButton, TextField, makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles(() => ({
   textField: {
-    width: '60vw',
     fontSize: '15px',
-    color: 'red',
+    width: '63vw',
   },
 }));
 
@@ -136,6 +135,7 @@ const CommentWall = (props) => {
                   type="text"
                   // onChange={(e) => setTextValue(e.target.value)}
                   autoComplete="off"
+                  fullWidth
                   InputProps={{
                     className: classes.textField
                   }}

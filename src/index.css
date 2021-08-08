@@ -66,12 +66,12 @@ code {
 }
 
 .like-icon{
-  margin-left: 21vw;
+  margin-left: 15vw;
   margin-right: 30vw;
 }
 
 .like, .comment{
-  margin-left: 4px;
+  margin-left: 3px;
 }
 
 .like-counter{
