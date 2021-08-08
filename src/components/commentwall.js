@@ -22,7 +22,7 @@ const CommentWall = (props) => {
   const [ commentCounter, setCommentCounter ] = useState(0);
   const [ message, setMessage ] = useState('View more comments');
   const [ viewMore, setViewMore ] = useState(false);
-  const [ textFieldOn, setTextFieldOn ] = useState(true);
+  const [ textFieldOn, setTextFieldOn ] = useState(false);
   const classes = useStyles();
 
   /**
@@ -154,6 +154,7 @@ const CommentWall = (props) => {
                   firstBox={'Edit'}
                   secondBox={'Delete'}
                   functionality={'comment'}
+                  triggerEditComment={triggerEditComment}
                 />
               </IconButton>
             </div>

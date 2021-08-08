@@ -2,7 +2,7 @@ import React, { useState }  from 'react';
 import { IconButton } from '@material-ui/core';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 
-const Likes = (props) => {
+const LikeIcon = (props) => {
   const { firebase,
           uid,
           databaseKey,
@@ -39,4 +39,4 @@ const Likes = (props) => {
   )
 }
 
-export default Likes;
+export default LikeIcon;

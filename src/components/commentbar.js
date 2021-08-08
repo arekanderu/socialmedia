@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import ProfileAvatar from './profileavatar';
 import { TextField, Grid } from '@material-ui/core';
 
-const Comments = (props) => {
+const CommentBar = (props) => {
   const { firstName,
           lastName,
           firebase,
@@ -69,4 +69,4 @@ const Comments = (props) => {
   );
 }
 
-export default Comments;
+export default CommentBar;

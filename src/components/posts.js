@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Card, CardHeader, IconButton, CardContent, CardActions, Divider, Collapse } from '@material-ui/core';
 import ProfileAvatar from './profileavatar';
-import Likes from './likes';
-import Comments from './comments';
+import LikeIcon from './likeicon';
+import CommentIcon from './commenticon';
 import LikeCounter from './likecounter';
 import CommentBar from './commentbar';
 import CommentWall from './commentwall';
@@ -94,13 +94,17 @@ const Posts = (props) => {
           <Divider />
 
             <CardActions>
-              <Likes
+              <LikeIcon
                 firebase={firebase}
                 uid={uid}
                 databaseKey={databaseKeys[i]}
                 filteredArray={filterArray(databaseKeys[i])}
               />
-              <Comments open={open} setOpen={setOpen} index={i}/>
+              <CommentIcon
+                open={open}
+                setOpen={setOpen}
+                index={i}
+              />
             </CardActions>
           <Divider/>
 

@@ -34,7 +34,7 @@ export default function PopoverPopupState(props) {
 
     if(functionality === 'comment'){
       if(action === 'edit'){
-        console.log('edit');
+        props.triggerEditComment();
       }
 
       else{

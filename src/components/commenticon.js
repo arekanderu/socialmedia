@@ -2,7 +2,7 @@ import React from 'react';
 import { IconButton } from '@material-ui/core';
 import ChatBubbleIcon from '@material-ui/icons/ChatBubble';
 
-const Comments = (props) => {
+const CommentIcon = (props) => {
   const { setOpen,
           index } = props;
 
@@ -16,4 +16,4 @@ const Comments = (props) => {
   );
 }
 
-export default Comments;
+export default CommentIcon;
