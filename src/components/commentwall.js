@@ -1,14 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import ProfileAvatar from './profileavatar';
 import Popover from './popover';
-import { IconButton, TextField, makeStyles } from '@material-ui/core';
-
-const useStyles = makeStyles(() => ({
-  textField: {
-    fontSize: '15px',
-    width: '63vw',
-  },
-}));
+import { IconButton } from '@material-ui/core';
+import Comment from './comment';
 
 const CommentWall = (props) => {
   const { firebase,
@@ -22,8 +16,8 @@ const CommentWall = (props) => {
   const [ commentCounter, setCommentCounter ] = useState(0);
   const [ message, setMessage ] = useState('View more comments');
   const [ viewMore, setViewMore ] = useState(false);
-  const [ textFieldOn, setTextFieldOn ] = useState(false);
-  const classes = useStyles();
+  const [ triggerEditComment, setTriggerEditComment ] = useState(false);
+
 
   /**
    * UPDATE ME!!!
@@ -32,13 +26,6 @@ const CommentWall = (props) => {
   const showMoreComment = () =>{
     setViewMore(true);
     setMessage('');
-  }
-
-  /**
-   *
-   */
-  const triggerEditComment = () => {
-    setTextFieldOn(true);
   }
 
   useEffect(() => {
@@ -127,22 +114,10 @@ const CommentWall = (props) => {
               <a href="/#">{firstName} {lastName}</a>
             </small>
 
-            <div className="comment-content">
-              {textFieldOn ?
-                <TextField
-                  autoFocus
-                  value={content}
-                  type="text"
-                  // onChange={(e) => setTextValue(e.target.value)}
-                  autoComplete="off"
-                  fullWidth
-                  InputProps={{
-                    className: classes.textField
-                  }}
-                />
-                  :
-                <small>{content}</small> }
-            </div>
+              <Comment
+                content={content}
+                triggerEditComment={triggerEditComment}
+              />
           </div>
 
             <div className="comment-more">
@@ -154,7 +129,7 @@ const CommentWall = (props) => {
                   firstBox={'Edit'}
                   secondBox={'Delete'}
                   functionality={'comment'}
-                  triggerEditComment={triggerEditComment}
+                  triggerEditComment={setTriggerEditComment}
                 />
               </IconButton>
             </div>
