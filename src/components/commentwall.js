@@ -29,6 +29,9 @@ const CommentWall = (props) => {
     setMessage('');
   }
 
+  /**
+   * UPDATE ME !!!!
+   */
   const action = (id) => {
     setTriggerEditComment(true);
     setCommentIdToEdit(id);
