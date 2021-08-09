@@ -17,15 +17,21 @@ const CommentWall = (props) => {
   const [ message, setMessage ] = useState('View more comments');
   const [ viewMore, setViewMore ] = useState(false);
   const [ triggerEditComment, setTriggerEditComment ] = useState(false);
+  const [ commentIdToEdit, setCommentIdToEdit ] = useState('');
 
 
   /**
    * UPDATE ME!!!
    *
    */
-  const showMoreComment = () =>{
+  const showMoreComment = () => {
     setViewMore(true);
     setMessage('');
+  }
+
+  const action = (id) => {
+    setTriggerEditComment(true);
+    setCommentIdToEdit(id);
   }
 
   useEffect(() => {
@@ -117,6 +123,8 @@ const CommentWall = (props) => {
               <Comment
                 content={content}
                 triggerEditComment={triggerEditComment}
+                commentId={commentOnPostId[i]}
+                commentIdToEdit={commentIdToEdit}
               />
           </div>
 
@@ -129,7 +137,7 @@ const CommentWall = (props) => {
                   firstBox={'Edit'}
                   secondBox={'Delete'}
                   functionality={'comment'}
-                  triggerEditComment={setTriggerEditComment}
+                  action={action}
                 />
               </IconButton>
             </div>

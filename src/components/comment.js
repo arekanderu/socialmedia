@@ -10,24 +10,28 @@ const useStyles = makeStyles(() => ({
 
 const Comment = (props) => {
   const { content,
-          triggerEditComment } = props;
+          triggerEditComment,
+          commentId,
+          commentIdToEdit } = props;
 
   const classes = useStyles();
   const [ textFieldOn, setTextFieldOn ] = useState(false);
   const [ textValue, setTextValue ] = useState('');
 
   useEffect(() => {
+    console.log(commentIdToEdit)
     const changeToTextField = () => {
-      if(triggerEditComment) {
+      if(triggerEditComment && commentId === commentIdToEdit) {
         setTextFieldOn(true);
       }
-
+      else{
+        setTextFieldOn(false);
+      }
     }
-
 
     changeToTextField();
 
-  }, [triggerEditComment])
+  }, [ triggerEditComment, commentIdToEdit ])
 
 
 
