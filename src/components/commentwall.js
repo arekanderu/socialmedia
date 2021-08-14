@@ -18,11 +18,11 @@ const CommentWall = (props) => {
   const [ viewMore, setViewMore ] = useState(false);
   const [ triggerEditComment, setTriggerEditComment ] = useState(false);
   const [ commentIdToEdit, setCommentIdToEdit ] = useState('');
-
+  const [ textValue, setTextValue ] = useState('');
 
   /**
-   * UPDATE ME!!!
-   *
+   * Will set view more to true to open all comments then it will
+   * clear the "View more" text to nothing to hide it.
    */
   const showMoreComment = () => {
     setViewMore(true);
@@ -30,7 +30,8 @@ const CommentWall = (props) => {
   }
 
   /**
-   * UPDATE ME !!!!
+   * Set edit comment to true to prepare to edit the comment then
+   * capture the comment id.
    */
   const action = (id) => {
     setTriggerEditComment(true);
@@ -39,12 +40,10 @@ const CommentWall = (props) => {
 
   useEffect(() => {
     let ref = firebase.database().ref('comments/' + databaseKey);
+
     /**
-     * Read the comment in database and push it to the state.
-     * Query is only limit to 1 which is the very previous
-     * comment.
-     *
-     * UPDATE ME....
+     * By default it will only show 1 comment. Else it will show
+     * all of the comment
      */
     const commentView = () => {
       let arrayPosts = [];
@@ -84,7 +83,7 @@ const CommentWall = (props) => {
     }
 
     /**
-     * UPDATE ME
+     * Retrieve all comment id's
      */
     const retriveKeys = () => {
       firebase.database().ref('comments/' + databaseKey).once("value", snapshot => {
@@ -102,7 +101,7 @@ const CommentWall = (props) => {
     checkForMoreComments();
     retriveKeys();
 
-  }, [firebase, databaseKey, postId, viewMore])
+  }, [firebase, databaseKey, postId, viewMore, textValue])
 
 
   return(
@@ -128,6 +127,10 @@ const CommentWall = (props) => {
                 triggerEditComment={triggerEditComment}
                 commentId={commentOnPostId[i]}
                 commentIdToEdit={commentIdToEdit}
+                textValue={textValue}
+                setTextValue={setTextValue}
+                firebase={firebase}
+                postId={databaseKey}
               />
           </div>
 
@@ -141,6 +144,8 @@ const CommentWall = (props) => {
                   secondBox={'Delete'}
                   functionality={'comment'}
                   action={action}
+                  content={content}
+                  setTextValue={setTextValue}
                 />
               </IconButton>
             </div>

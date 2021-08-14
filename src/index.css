@@ -148,3 +148,16 @@ code {
 .comment-view-more-comment:hover{
   text-decoration: underline;
 }
+
+.esc{
+  font-size: 10px;
+}
+
+.cancel{
+  color: #67A5F6;
+}
+
+.cancel:hover{
+  text-decoration: underline;
+  cursor: pointer;
+}

@@ -19,7 +19,7 @@ export default function PopoverPopupState(props) {
    *
    * When you click on the Edit button it will pass the data to the function for later use then it will close the popup.
    */
-  const handleOnClick = (functionality, action, popupState, postId, commentId) =>{
+  const handleOnClick = (functionality, action, popupState, postId) =>{
     if(functionality === 'post'){
       console.log(postId);
       if(action === 'edit'){
@@ -35,6 +35,7 @@ export default function PopoverPopupState(props) {
     if(functionality === 'comment'){
       if(action === 'edit'){
         props.action(props.commentId);
+        props.setTextValue(props.content);
       }
 
       else{
