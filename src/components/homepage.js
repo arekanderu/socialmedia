@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { AppBar, Toolbar, Typography, Button, IconButton, makeStyles } from '@material-ui/core';
+import { AppBar, Toolbar, Typography, Button, IconButton, makeStyles, Container, Grid } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import SupervisedUserCircleIcon from '@material-ui/icons/SupervisedUserCircle';
 import firebase from '../config/database';
 import Crud from './crud';
 import ProfileAvatar from './profileavatar';
+import Profile from './profile';
 
 const useStyles = makeStyles(() => ({
   title: {
@@ -47,18 +48,29 @@ const Homepage = (props) => {
           </Typography>
 
           <ProfileAvatar firstName={firstName} lastName={lastName}/>
-          &nbsp;{firstName} |
-          <Button color="inherit" onClick={handleLogout} >Log out</Button>
+            &nbsp;{firstName} |
+            <Button color="inherit" onClick={handleLogout} >Log out</Button>
         </Toolbar>
       </AppBar>
 
-      <Crud
-        firstName={firstName}
-        lastName={lastName}
-        firebase={firebase}
-        uid={uid}
-      />
+      <Grid container spacing={9}>
+      <Grid item xs={2}>
+          <Profile />
+        </Grid>
 
+        <Grid item xs={10}>
+          <Container>
+            <Crud
+              firstName={firstName}
+              lastName={lastName}
+              firebase={firebase}
+              uid={uid}
+            />
+          </Container>
+        </Grid>
+
+
+      </Grid>
     </div>
   )
 }
