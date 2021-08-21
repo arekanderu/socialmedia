@@ -161,3 +161,19 @@ code {
   text-decoration: underline;
   cursor: pointer;
 }
+
+.profile{
+  border-bottom: 1px solid #CCCED2;
+}
+
+.profile-avatar{
+  padding: 10px;
+  display: inline-block;
+
+}
+
+.profile-full-name{
+  font-size: 30px;
+  font-weight: 700;
+
+}

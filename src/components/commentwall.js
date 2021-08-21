@@ -19,6 +19,8 @@ const CommentWall = (props) => {
   const [ triggerEditComment, setTriggerEditComment ] = useState(false);
   const [ commentIdToEdit, setCommentIdToEdit ] = useState('');
   const [ textValue, setTextValue ] = useState('');
+  const fullName = firstName + ' ' + lastName;
+
 
   /**
    * Will set view more to true to open all comments then it will
@@ -119,7 +121,7 @@ const CommentWall = (props) => {
 
           <div className="comment-wall-chatbox">
             <small className="comment-first-last-name">
-              <a href="/#">{firstName} {lastName}</a>
+              <a href="/#">{fullName}</a>
             </small>
 
               <Comment

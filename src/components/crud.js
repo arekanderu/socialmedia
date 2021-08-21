@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { TextField, Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider } from '@material-ui/core';
+import { TextField, Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Container } from '@material-ui/core';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import ProfileAvatar from './profileavatar';
 import Posts from './posts';
@@ -25,6 +25,7 @@ const Crud = (props) => {
   const [ dialogMessage, setDialogMessage ] = useState('');
   const [ dialogActionName, setDialogActionName ] = useState('');
   const [ dialogSecondaryActionName, setDialogSecondaryActionName ] = useState('');
+  const fullName = firstName + ' ' + lastName;
 
   /**
   * If you make any changes to the textbox while you are in 'Edit' mode
@@ -201,87 +202,89 @@ const Crud = (props) => {
   }, [firebase, uid, action, open, textChanged, temp, textValue, databaseKey])
 
   return(
-    <div className="wall">
-      <br />
-      <TextField
-        placeholder={"Whats on your mind, " + firstName}
-        fullWidth
-        onClick={() => createDialog()}
-        value={textValue}
+    <Container>
+      <div className="wall">
+        <br />
+        <TextField
+          placeholder={"Whats on your mind, " + firstName}
+          fullWidth
+          onClick={() => createDialog()}
+          value={textValue}
+        />
+
+          <Dialog open={open} onClose={() => handleClose()} aria-labelledby="form-dialog-title" fullWidth>
+            <DialogActions>
+              <Button className="close-button" onClick={() => handleClose()} >
+                <HighlightOffIcon />
+              </Button>
+              </DialogActions>
+            <DialogTitle id="form-dialog-title">{title}</DialogTitle>
+            <Divider />
+            <br />
+
+            <DialogContent>
+                <div className="content-header">
+                  <ProfileAvatar firstName={firstName} lastName={lastName}/>
+                    <div className="name">
+                      {fullName}
+                    </div>
+                  </div>
+                  <br />
+
+              <TextField
+                autoFocus
+                margin="dense"
+                placeholder="Whats on your mind?"
+                type="text"
+                fullWidth
+                onChange={(e) => setTextValue(e.target.value)}
+                value={textValue}
+                autoComplete="off"
+              />
+            </DialogContent>
+
+            <DialogActions>
+              <Button
+                fullWidth
+                color="primary"
+                variant="contained"
+                onClick={() => post(false)}
+                disabled={textValue.length === 0 || textChanged === false}
+              >
+                {action}
+              </Button>
+            </DialogActions>
+            <p className="alert">{error}</p>
+          </Dialog>
+
+      <Posts
+        firstName={firstName}
+        lastName={lastName}
+        databasePosts={databasePosts}
+        databaseKeys={databaseKeys}
+        editDialog={editDialog}
+        open={open}
+        deleteDialog={deleteDialog}
+        firebase={firebase}
+        uid={uid}
       />
 
-        <Dialog open={open} onClose={() => handleClose()} aria-labelledby="form-dialog-title" fullWidth>
-          <DialogActions>
-            <Button className="close-button" onClick={() => handleClose()} >
-              <HighlightOffIcon />
-            </Button>
-            </DialogActions>
-          <DialogTitle id="form-dialog-title">{title}</DialogTitle>
-          <Divider />
-          <br />
+      <DialogBox
+        open={openDialog}
+        title={dialogTitle}
+        message={dialogMessage}
+        action={dialogActionName}
+        secondaryAction={dialogSecondaryActionName}
+        openDialog={setOpenDialog}
+        mainDialog={setOpen}
+        textValue={setTextValue}
+        temp={temp}
+        isDelete={dialogSecondaryActionName}
+        deletePost={deletePost}
+      />
 
-          <DialogContent>
-              <div className="content-header">
-                <ProfileAvatar firstName={firstName} lastName={lastName}/>
-                  <div className="name">
-                    {firstName} {lastName}
-                  </div>
-                </div>
-                <br />
-
-            <TextField
-              autoFocus
-              margin="dense"
-              placeholder="Whats on your mind?"
-              type="text"
-              fullWidth
-              onChange={(e) => setTextValue(e.target.value)}
-              value={textValue}
-              autoComplete="off"
-            />
-          </DialogContent>
-
-          <DialogActions>
-            <Button
-              fullWidth
-              color="primary"
-              variant="contained"
-              onClick={() => post(false)}
-              disabled={textValue.length === 0 || textChanged === false}
-            >
-              {action}
-            </Button>
-          </DialogActions>
-          <p className="alert">{error}</p>
-        </Dialog>
-
-    <Posts
-      firstName={firstName}
-      lastName={lastName}
-      databasePosts={databasePosts}
-      databaseKeys={databaseKeys}
-      editDialog={editDialog}
-      open={open}
-      deleteDialog={deleteDialog}
-      firebase={firebase}
-      uid={uid}
-    />
-
-    <DialogBox
-      open={openDialog}
-      title={dialogTitle}
-      message={dialogMessage}
-      action={dialogActionName}
-      secondaryAction={dialogSecondaryActionName}
-      openDialog={setOpenDialog}
-      mainDialog={setOpen}
-      textValue={setTextValue}
-      temp={temp}
-      isDelete={dialogSecondaryActionName}
-      deletePost={deletePost}
-    />
-
-    </div>
+      </div>
+    </Container>
   )
 }
 

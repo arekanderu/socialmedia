@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { AppBar, Toolbar, Typography, Button, IconButton, makeStyles, Container, Grid } from '@material-ui/core';
+import { AppBar, Toolbar, Typography, Button, IconButton, makeStyles } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import SupervisedUserCircleIcon from '@material-ui/icons/SupervisedUserCircle';
 import firebase from '../config/database';
@@ -53,24 +53,17 @@ const Homepage = (props) => {
         </Toolbar>
       </AppBar>
 
-      <Grid container spacing={9}>
-      <Grid item xs={2}>
-          <Profile />
-        </Grid>
+      <Profile
+        firstName={firstName}
+        lastName={lastName}
+      />
 
-        <Grid item xs={10}>
-          <Container>
-            <Crud
-              firstName={firstName}
-              lastName={lastName}
-              firebase={firebase}
-              uid={uid}
-            />
-          </Container>
-        </Grid>
-
-
-      </Grid>
+      <Crud
+        firstName={firstName}
+        lastName={lastName}
+        firebase={firebase}
+        uid={uid}
+      />
     </div>
   )
 }

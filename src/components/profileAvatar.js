@@ -6,6 +6,11 @@ const useStyles = makeStyles((theme) => ({
   small: {
     width: theme.spacing(3),
     height: theme.spacing(3),
+  },
+
+  large: {
+    width: theme.spacing(15),
+    height: theme.spacing(15),
   }
 }));
 
@@ -14,16 +19,23 @@ const ProfileAvatar = (props) => {
           lastName,
           size } = props;
   const classes = useStyles();
-  let isSmall = '';
+  let propSize = '';
 
   if(size === 'small'){
-    isSmall = classes.small;
+    propSize = classes.small;
+  }
+
+  else if(size === 'large'){
+    propSize = classes.large;
   }
 
   return(
-    <Avatar className={isSmall} alt="picture" src="/static/images/avatar/1.jpg">
-      <span>{firstName.substring(0,1)}{lastName.substring(0,1)}</span>
-  </Avatar>
+    <div className="main-avatar">
+       <Avatar className={propSize} alt="picture" src="/static/images/avatar/1.jpg">
+        <span>{firstName.substring(0,1)}{lastName.substring(0,1)}</span>
+      </Avatar>
+    </div>
+
   )
 }
 
