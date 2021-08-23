@@ -4,8 +4,8 @@ import PopupState, { bindTrigger, bindPopover } from 'material-ui-popup-state';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import { Box, Button } from '@material-ui/core';
 import DialogBox from './dialogbox';
-
-
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 export default function PopoverPopupState(props) {
 
@@ -70,11 +70,13 @@ export default function PopoverPopupState(props) {
           >
             <Box p={2}>
               <Button size="small" onClick={() => handleOnClick(props.functionality, 'edit', popupState, props.postId, props.commentId)}>
-                {props.firstBox}
+                {props.functionality === 'post' ? <EditIcon /> : '' }
+                &nbsp;{props.firstBox}
               </Button>
               <br />
               <Button size="small" onClick={() => handleOnClick(props.functionality, 'delete', popupState, props.postId, props.commentId)}>
-                {props.secondBox}
+                {props.functionality === 'post' ? <DeleteIcon /> : '' }
+                &nbsp;{props.secondBox}
               </Button>
             </Box>
           </Popper>
