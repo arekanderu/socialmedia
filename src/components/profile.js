@@ -3,6 +3,7 @@ import { Container, Popover, Button, Box } from '@material-ui/core';
 import ProfileAvatar from './profileavatar';
 import PopupState, { bindTrigger, bindPopover } from 'material-ui-popup-state';
 import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary';
+import DialogBox from './dialogbox';
 
 const Profile = (props) => {
   const { firstName,
@@ -10,12 +11,16 @@ const Profile = (props) => {
 
   const fullName = firstName + ' ' + lastName;
 
+  const handleOnClick = () => {
+
+  }
+
   return(
     <Container>
       <div className='profile'>
         <div className='profile-avatar'>
 
-        <PopupState variant="popover" popupId="demo-popup-popover">
+        <PopupState variant="popover">
           {(popupState) => (
             <div>
             <Button {...bindTrigger(popupState)}>
@@ -38,7 +43,7 @@ const Profile = (props) => {
               }}
             >
             <Box p={2}>
-              <Button size="small">
+              <Button size="small" onClick={() => handleOnClick()}>
                 <PhotoLibraryIcon />
                 &nbsp; Update Profile Picture
               </Button>
