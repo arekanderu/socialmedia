@@ -57,7 +57,12 @@ const DialogBox = (props) => {
         <Divider />
 
         <DialogContent >
-        <p>{message}</p>
+          {message !== '' ?
+            <p>{message}</p>
+            :
+            <input type="file"></input>
+          }
+
         </DialogContent>
 
           <DialogActions>

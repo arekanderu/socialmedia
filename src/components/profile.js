@@ -4,6 +4,7 @@ import ProfileAvatar from './profileavatar';
 import PopupState, { bindTrigger, bindPopover } from 'material-ui-popup-state';
 import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary';
 import DialogBox from './dialogbox';
+import storage from '../config/database';
 
 const Profile = (props) => {
   const { firstName,
@@ -68,6 +69,7 @@ const Profile = (props) => {
         title={'Update Profile Picture'}
         action={'Cancel'}
         secondaryAction={'Upload Photo'}
+        message={''}
         openDialog={setOpenDialog}
         />
 

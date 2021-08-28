@@ -64,7 +64,7 @@ const Comment = (props) => {
 
 
   return(
-    <div classsName="comment">
+    <div>
       <div className="comment-content">
         {textFieldOn ?
           <TextField
@@ -83,8 +83,7 @@ const Comment = (props) => {
         <small>{content}</small>}
       </div>
       {textFieldOn ?
-          <small className="esc">Press Esc to <span onClick={() => setTextFieldOn(false)} className="cancel">cancel</span>.</small> : '' }
-
+          <small className="esc">Press Esc to <span className="cancel" onClick={() => setTextFieldOn(false)}>cancel</span>.</small> : '' }
     </div>
   );
 }
