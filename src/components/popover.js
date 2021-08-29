@@ -21,7 +21,6 @@ export default function PopoverPopupState(props) {
    */
   const handleOnClick = (functionality, action, popupState, postId) =>{
     if(functionality === 'post'){
-      console.log(postId);
       if(action === 'edit'){
         props.editDialog(props.content, postId);
       }
@@ -88,6 +87,7 @@ export default function PopoverPopupState(props) {
             secondaryAction={'Delete'}
             deleteComment={deleteComment}
             openDialog={setOpenDialog}
+            isDelete={'Comment'}
           />
         </div>
       )}

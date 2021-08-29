@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { Container, Popover, Button, Box } from '@material-ui/core';
+import { Container, Popover, Button, Box, CircularProgress} from '@material-ui/core';
 import ProfileAvatar from './profileavatar';
 import PopupState, { bindTrigger, bindPopover } from 'material-ui-popup-state';
 import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary';
 import DialogBox from './dialogbox';
-import storage from '../config/database';
+import { storage } from '../config/database';
 
 const Profile = (props) => {
   const { firstName,
@@ -12,6 +12,8 @@ const Profile = (props) => {
 
   const fullName = firstName + ' ' + lastName;
   const [ openDialog, setOpenDialog ] = useState(false);
+  const [ image, setImage ] = useState('');
+  const [ url, setUrl ] = useState('');
 
   /**
    * @param popupState The state of the popup.
@@ -21,6 +23,30 @@ const Profile = (props) => {
   const handleOnClick = (popupState) => {
     setOpenDialog(true);
     popupState.close();
+  }
+
+  /**
+   * Handles the upload to firebase storage.
+   */
+  const handleUpload = () =>{
+    const uploadImage = storage.ref(`images/${image.name}`).put(image);
+
+      uploadImage.on(
+        "state_changed",
+        snapshot => {},
+        error => {
+          console.log(error);
+        },
+        () => {
+          storage
+            .ref("images")
+            .child(image.name)
+            .getDownloadURL()
+            .then( url => {
+              setUrl(url);
+            });
+        }
+      );
   }
 
   return(
@@ -36,6 +62,7 @@ const Profile = (props) => {
                 firstName={firstName}
                 lastName={lastName}
                 size='large'
+                url={url}
              />
             </Button>
 
@@ -69,10 +96,11 @@ const Profile = (props) => {
         title={'Update Profile Picture'}
         action={'Cancel'}
         secondaryAction={'Upload Photo'}
-        message={''}
         openDialog={setOpenDialog}
+        message={''}
+        setImage={setImage}
+        handleUpload={handleUpload}
         />
-
     </Container>
   )
 }

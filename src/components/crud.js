@@ -279,7 +279,7 @@ const Crud = (props) => {
         mainDialog={setOpen}
         textValue={setTextValue}
         temp={temp}
-        isDelete={dialogSecondaryActionName}
+        isDelete={'Post'}
         deletePost={deletePost}
       />
 

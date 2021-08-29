@@ -177,3 +177,10 @@ code {
   font-weight: 700;
 
 }
+
+.avatar-picture{
+  vertical-align: middle;
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+}

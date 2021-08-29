@@ -14,36 +14,56 @@ const DialogBox = (props) => {
           temp,
           isDelete,
           deletePost,
-          deleteComment } = props;
+          deleteComment,
+          setImage,
+          handleUpload } = props;
 
   /**
    * Close the Dialog Box and change the text value of the main text box to
    * nothing.
    */
   const handleClose = () => {
-    if(isDelete === ' Delete'){
+    if(isDelete === 'Post'){
       textValue(temp);
     }
     openDialog(false);
   }
 
   /**
-   * Delete a post and close main dialog box.
-   * else it will delete a comment on a post.
-   * It will then close the propmpt dialog box.
+   * Delete a POST and close main dialog box.
+   * else if it is a comment it will delete a
+   * comment on a the post. Else, it will
+   * run upload image command from props.
+   * After every if's
+   * it will close the dialog box.
+   *
    */
   const handleOnClick = () => {
-    if(isDelete === 'Delete'){
+    if(isDelete === 'Post'){
       deletePost();
       mainDialog(false);
     }
 
-    else{
+    else if(isDelete === 'Comment'){
       deleteComment();
     }
 
+    else{
+      handleUpload();
+    }
+
     openDialog(false);
-  }
+  };
+
+  /**
+   * @param e The target file name.
+   * Capture the image from file.
+   */
+  const handleChange = e => {
+    if(e.target.files[0]){
+      setImage(e.target.files[0]);
+    }
+  };
 
   return(
     <div className="dialog-box">
@@ -60,7 +80,7 @@ const DialogBox = (props) => {
           {message !== '' ?
             <p>{message}</p>
             :
-            <input type="file"></input>
+            <input type="file" onChange={handleChange}/>
           }
 
         </DialogContent>
