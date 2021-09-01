@@ -9,6 +9,7 @@ const App = () => {
   const [ emailErrorMessage, setEmailErrorMessage ] = useState('');
   const [ passwordErrorMessage, setPasswordErrorMessage ] = useState('');
   const [ user, setUser ] = useState('');
+  const [ imageUrl, setImageUrl ] = useState('');
 
   const handleSignUp = (firstName, lastName) => {
     clearErrors();
@@ -38,6 +39,7 @@ const App = () => {
   const handleLogout = () => {
     firebase.auth().signOut().then(() => {
       setUser("");
+      setImageUrl("");
     }).catch(() => {
       console.log('There was an error.')
     });
@@ -70,6 +72,9 @@ const App = () => {
     let unsubscribe = firebase.auth().onAuthStateChanged((userCredential) => {
       if(userCredential){
         setUser(userCredential);
+        firebase.storage().ref('users/' + userCredential.uid + '/profile.jpg').getDownloadURL().then(imgUrl => {
+          setImageUrl(imgUrl);
+        })
       }
 
       else{
@@ -77,7 +82,7 @@ const App = () => {
       }
       return () => unsubscribe();
     })
-  },[])
+  },[setImageUrl])
 
 
   return(
@@ -86,6 +91,7 @@ const App = () => {
         <Homepage
           handleLogout={handleLogout}
           uid={user.uid}
+          imageUrl={imageUrl}
         /> :
         <Login
           email={email}

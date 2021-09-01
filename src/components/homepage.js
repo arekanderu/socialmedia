@@ -15,7 +15,8 @@ const useStyles = makeStyles(() => ({
 
 const Homepage = (props) => {
   const { handleLogout,
-          uid } = props;
+          uid,
+          imageUrl } = props;
   const classes = useStyles();
   const [ firstName, setFirstName] = useState('');
   const [ lastName, setLastName ] = useState('');
@@ -56,6 +57,8 @@ const Homepage = (props) => {
       <Profile
         firstName={firstName}
         lastName={lastName}
+        uid={uid}
+        imageUrl={imageUrl}
       />
 
       <Crud

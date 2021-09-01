@@ -18,7 +18,7 @@ const ProfileAvatar = (props) => {
   const { firstName,
           lastName,
           size,
-          url } = props;
+          imageUrl} = props;
   const classes = useStyles();
   let propSize = '';
 
@@ -32,8 +32,8 @@ const ProfileAvatar = (props) => {
 
   return(
     <div className="main-avatar">
-      {url ?
-        <img src={url} alt="picture" className='avatar-picture'></img>
+      {imageUrl ?
+        <img src={imageUrl} alt="avatar-pic" className='avatar-picture'/>
         :
         <Avatar className={propSize} alt="picture" src="/static/images/avatar/1.jpg">
           <span>{firstName.substring(0,1)}{lastName.substring(0,1)}</span>
