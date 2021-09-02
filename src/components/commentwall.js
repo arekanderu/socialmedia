@@ -9,7 +9,8 @@ const CommentWall = (props) => {
           databaseKey,
           firstName,
           lastName,
-          postId } = props;
+          postId,
+          imageUrl } = props;
 
   const [ commentOnPost, setCommentOnPost ] = useState([]);
   const [ commentOnPostId, setCommentOnPostId ] = useState([]);
@@ -116,6 +117,7 @@ const CommentWall = (props) => {
               firstName={firstName}
               lastName={lastName}
               size='small'
+              imageUrl={imageUrl}
             />
           </div>
 

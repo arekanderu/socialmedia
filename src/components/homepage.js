@@ -48,7 +48,11 @@ const Homepage = (props) => {
             Social Network
           </Typography>
 
-          <ProfileAvatar firstName={firstName} lastName={lastName}/>
+          <ProfileAvatar
+            firstName={firstName}
+            lastName={lastName}
+            imageUrl={imageUrl}
+          />
             &nbsp;{firstName} |
             <Button color="inherit" onClick={handleLogout} >Log out</Button>
         </Toolbar>
@@ -66,6 +70,7 @@ const Homepage = (props) => {
         lastName={lastName}
         firebase={firebase}
         uid={uid}
+        imageUrl={imageUrl}
       />
     </div>
   )

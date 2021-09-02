@@ -9,7 +9,8 @@ const Crud = (props) => {
   const { firstName,
           lastName,
           firebase,
-          uid } = props;
+          uid,
+          imageUrl } = props;
   const [ open, setOpen ] = useState(false);
   const [ textValue, setTextValue ] = useState('');
   const [ databasePosts, setDatabasePost ] = useState([]);
@@ -224,7 +225,11 @@ const Crud = (props) => {
 
             <DialogContent>
                 <div className="content-header">
-                  <ProfileAvatar firstName={firstName} lastName={lastName}/>
+                  <ProfileAvatar
+                    firstName={firstName}
+                    lastName={lastName}
+                    imageUrl={imageUrl}
+                  />
                     <div className="name">
                       {fullName}
                     </div>
@@ -267,6 +272,7 @@ const Crud = (props) => {
         deleteDialog={deleteDialog}
         firebase={firebase}
         uid={uid}
+        imageUrl={imageUrl}
       />
 
       <DialogBox

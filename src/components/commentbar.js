@@ -6,7 +6,8 @@ const CommentBar = (props) => {
   const { firstName,
           lastName,
           firebase,
-          databaseKey } = props;
+          databaseKey,
+          imageUrl } = props;
 
   const [ textValue, setTextValue ] = useState('');
 
@@ -51,6 +52,7 @@ const CommentBar = (props) => {
                   firstName={firstName}
                   lastName={lastName}
                   size='small'
+                  imageUrl={imageUrl}
                 />
               </div>
             </Grid>

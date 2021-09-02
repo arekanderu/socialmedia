@@ -16,7 +16,8 @@ const Posts = (props) => {
           editDialog,
           deleteDialog,
           firebase,
-          uid } = props;
+          uid,
+          imageUrl } = props;
 
   const fullName = firstName + ' ' + lastName;
   const [ postId, setPostId ] = useState([]);
@@ -59,7 +60,10 @@ const Posts = (props) => {
       Object.values(databasePosts).map(({content, date}, i) => (
         <Card variant="outlined" style={{marginBottom: 20}} key={i}>
           <CardHeader
-            avatar={<ProfileAvatar firstName={firstName} lastName={lastName}/>}
+            avatar={<ProfileAvatar
+                      firstName={firstName}
+                      lastName={lastName}
+                      imageUrl={imageUrl}/>}
             action={
               <IconButton aria-label="settings">
                 <Popover
@@ -114,6 +118,7 @@ const Posts = (props) => {
             firstName={firstName}
             lastName={lastName}
             postId={postId}
+            imageUrl={imageUrl}
           />
           <Collapse in={open === i}>
             <CommentBar
@@ -121,6 +126,7 @@ const Posts = (props) => {
               lastName={lastName}
               firebase={firebase}
               databaseKey={databaseKeys[i]}
+              imageUrl={imageUrl}
             />
           </Collapse>
 

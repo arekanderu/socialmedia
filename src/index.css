@@ -180,6 +180,22 @@ code {
 
 .avatar-picture{
   vertical-align: middle;
+  width: 46px;
+  height: 45px;
+  border-radius: 50%;
+
+}
+
+.avatar-picture-small{
+  vertical-align: middle;
+  width: 28x;
+  height: 28px;
+  border-radius: 50%;
+
+}
+
+.avatar-picture-large{
+  vertical-align: middle;
   width: 110px;
   height: 110px;
   border-radius: 50%;
